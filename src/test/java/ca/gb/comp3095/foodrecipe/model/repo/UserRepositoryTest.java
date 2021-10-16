@@ -9,6 +9,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Optional;
+
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class UserRepositoryTest {
 
@@ -29,6 +31,6 @@ class UserRepositoryTest {
 
     @Test
     void itLoadsUser() {
-        Assertions.assertEquals(user, userRepository.findByName(user.getName()));
+        Assertions.assertEquals(Optional.of(user), userRepository.findByName(user.getName()));
     }
 }
