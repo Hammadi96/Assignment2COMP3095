@@ -18,7 +18,7 @@ import javax.persistence.Id;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = false)
 public class User extends CommonEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
