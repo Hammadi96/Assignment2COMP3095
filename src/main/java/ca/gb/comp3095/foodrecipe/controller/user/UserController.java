@@ -25,7 +25,7 @@ public class UserController {
     public ResponseEntity<UserDto> getUserByName(@RequestParam String userName) {
         try {
             UserDto userFound = userService.getUserByName(userName).map(UserConverter::fromDomain).orElseThrow(RuntimeException::new);
-            return new ResponseEntity<>(userFound, HttpStatus.CREATED);
+            return new ResponseEntity<>(userFound, HttpStatus.OK);
         } catch (Exception e) {
             log.error("No user found for {}", userName, e);
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -36,7 +36,7 @@ public class UserController {
     public ResponseEntity<UserDto> getUserById(@RequestParam Long userId) {
         try {
             UserDto userFound = userService.getUserById(userId).map(UserConverter::fromDomain).orElseThrow(RuntimeException::new);
-            return new ResponseEntity<>(userFound, HttpStatus.CREATED);
+            return new ResponseEntity<>(userFound, HttpStatus.OK);
         } catch (Exception e) {
             log.error("No user found for id {}", userId, e);
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
