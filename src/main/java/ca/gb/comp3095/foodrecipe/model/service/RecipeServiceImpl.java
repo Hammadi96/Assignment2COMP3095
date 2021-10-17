@@ -21,7 +21,7 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Override
     public Optional<Recipe> getRecipeById(Long id) {
-        return Optional.of(recipeRespository.getById(id));
+        return recipeRespository.findById(id);
     }
 
     @Override
