@@ -11,4 +11,10 @@ public class WebController {
         model.addAttribute("user", "test user");
         return "home";
     }
+
+    @GetMapping("/index")
+    public String index(Model model) {
+        model.addAttribute("user", "test user");
+        return "index";
+    }
 }
