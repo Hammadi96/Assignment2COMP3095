@@ -26,6 +26,8 @@ public class User extends CommonEntity {
 
     String name;
 
+    String email;
+
     String password;
 
 }

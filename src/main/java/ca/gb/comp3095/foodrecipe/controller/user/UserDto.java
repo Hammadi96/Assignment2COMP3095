@@ -10,6 +10,7 @@ import java.time.Instant;
 public class UserDto {
     Long id;
     String userName;
+    String email;
     String password;
     Instant creationTime;
 }
