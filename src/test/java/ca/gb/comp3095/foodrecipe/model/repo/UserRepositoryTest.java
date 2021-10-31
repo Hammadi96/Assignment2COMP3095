@@ -32,5 +32,6 @@ class UserRepositoryTest {
     @Test
     void itLoadsUser() {
         Assertions.assertEquals(Optional.of(user), userRepository.findByName(user.getName()));
+        Assertions.assertNotNull(user.getCreationTime());
     }
 }

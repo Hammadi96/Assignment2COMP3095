@@ -1,10 +1,40 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>User Details</title>
 </head>
 <body>
+<div class="alert" th:if="${message}">
+    <span class="closebtn" onclick="this.parentElement.style.display='none';" th:text="${message}">&times;</span>
+</div>
 
+<div th:if="${user}">
+    <table>
+        <tr>
+            <td>UserName:</td>
+            <td th:text="${user.getUserName()}"></td>
+        </tr>
+
+        <tr>
+            <td>Id:</td>
+            <td th:text="${user.getId()}"></td>
+        </tr>
+
+        <tr>
+            <td>Email:</td>
+            <td th:text="${user.getEmail()}"></td>
+        </tr>
+        <tr>
+            <td>Password:</td>
+            <td th:text="${user.getPassword()}"></td>
+        </tr>
+
+        <tr>
+            <td>Creation Time:</td>
+            <td th:text="${user.getCreationTime()}"></td>
+        </tr>
+    </table>
+</div>
 </body>
 </html>

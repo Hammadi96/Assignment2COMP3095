@@ -13,7 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Builder
-@ToString
+@ToString(callSuper = true)
 @Data
 @Entity
 @NoArgsConstructor

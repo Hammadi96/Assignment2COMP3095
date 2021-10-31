@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,8 +22,8 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @GetMapping(path = "/name/{name}")
-    public ResponseEntity<UserDto> getUserByName(@RequestParam String userName) {
+    @GetMapping(path = "/")
+    public ResponseEntity<UserDto> getUserByName(@RequestParam("name") String userName) {
         try {
             UserDto userFound = userService.getUserByName(userName).map(UserConverter::fromDomain).orElseThrow(RuntimeException::new);
             return new ResponseEntity<>(userFound, HttpStatus.OK);
@@ -33,7 +34,7 @@ public class UserController {
     }
 
     @GetMapping(path = "/id/{userId}")
-    public ResponseEntity<UserDto> getUserById(@RequestParam Long userId) {
+    public ResponseEntity<UserDto> getUserById(@PathVariable Long userId) {
         try {
             UserDto userFound = userService.getUserById(userId).map(UserConverter::fromDomain).orElseThrow(RuntimeException::new);
             return new ResponseEntity<>(userFound, HttpStatus.OK);
