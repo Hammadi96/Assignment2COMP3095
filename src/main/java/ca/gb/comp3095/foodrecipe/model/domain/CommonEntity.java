@@ -17,12 +17,12 @@ import java.time.Instant;
 @ToString
 public class CommonEntity {
 
-    @Column(updatable = false, insertable = false)
+    @Column(updatable = false)
     @Type(type = "org.hibernate.type.InstantType")
     @CreationTimestamp
     protected Instant creationTime;
 
-    @Column(updatable = false, insertable = false)
+    @Column(updatable = false)
     @Type(type = "org.hibernate.type.InstantType")
     @UpdateTimestamp
     protected Instant modificationTime;
