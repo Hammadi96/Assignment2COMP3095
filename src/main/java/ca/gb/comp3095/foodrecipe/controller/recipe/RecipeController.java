@@ -41,6 +41,11 @@ public class RecipeController {
             Recipe recipe = Recipe.builder().user(User.builder().id(userId).build())
                     .title(createRecipeCommand.getTitle())
                     .description(createRecipeCommand.getDescription())
+                    .cookingTime(createRecipeCommand.getCookingTime())
+                    .servings(createRecipeCommand.getServings())
+                    .imageUrl(createRecipeCommand.getImageUrl())
+                    .ingredients(createRecipeCommand.getIngredients())
+                    .instructions(createRecipeCommand.getCookingInstructions())
                     .build();
             RecipeDto recipeDto = RecipeConverter.toDto(recipeService.createRecipe(recipe));
             return new ResponseEntity<>(recipeDto, HttpStatus.CREATED);

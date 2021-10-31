@@ -3,6 +3,7 @@ package ca.gb.comp3095.foodrecipe.controller.recipe;
 import lombok.Builder;
 import lombok.Data;
 
+import java.time.Duration;
 import java.util.List;
 
 @Builder
@@ -10,7 +11,12 @@ import java.util.List;
 public class CreateRecipeCommand {
     String title;
     String description;
-    List<String> ingredients;
-    List<String> cookingInstructions;
+    List<String> ingredientsList;
+    List<String> cookingInstructionList;
+    String ingredients;
+    String cookingInstructions;
+    Long servings;
+    String imageUrl;
+    Duration cookingTime;
     Long userId;
 }

@@ -9,7 +9,12 @@ public class RecipeConverter {
         return Recipe.builder()
                 .id(recipeDto.getId())
                 .title(recipeDto.getTitle())
-                .description(recipeDto.getDescription()).user(User.builder().id(recipeDto.getUserId()).build()).build();
+                .description(recipeDto.getDescription())
+                .cookingTime(recipeDto.getCookingTime())
+                .servings(recipeDto.getServings())
+                .instructions(recipeDto.getInstructions())
+                .ingredients(recipeDto.getIngredients())
+                .user(User.builder().id(recipeDto.getUserId()).build()).build();
     }
 
     public static RecipeDto toDto(final Recipe recipe) {
@@ -17,6 +22,10 @@ public class RecipeConverter {
                 .creationTime(recipe.getCreationTime())
                 .id(recipe.getId()).title(recipe.getTitle())
                 .description(recipe.getDescription())
+                .cookingTime(recipe.getCookingTime())
+                .servings(recipe.getServings())
+                .instructions(recipe.getInstructions())
+                .ingredients(recipe.getIngredients())
                 .userId(recipe.getUser().getId()).build();
     }
 }

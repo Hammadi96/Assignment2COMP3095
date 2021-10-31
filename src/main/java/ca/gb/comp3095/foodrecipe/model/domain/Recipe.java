@@ -12,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import java.time.Duration;
 
 @Builder
 @ToString
@@ -27,7 +28,17 @@ public class Recipe extends CommonEntity {
 
     String title;
 
+    String imageUrl;
+
     String description;
+
+    Duration cookingTime;
+
+    Long servings;
+
+    String instructions;
+
+    String ingredients;
 
     @OneToOne
     User user;

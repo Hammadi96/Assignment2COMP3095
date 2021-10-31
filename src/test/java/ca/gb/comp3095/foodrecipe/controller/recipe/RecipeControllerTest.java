@@ -14,6 +14,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.time.Duration;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -36,8 +38,7 @@ class RecipeControllerTest {
 
     @BeforeEach
     void setUp() {
-        user = UserTestFactory.aRandomUser("test-user");
-        userService.createNewUser(user);
+        user = userService.createNewUser(UserTestFactory.aRandomUser("test-user"));
     }
 
     @AfterEach
@@ -48,7 +49,14 @@ class RecipeControllerTest {
 
     @Test
     void shouldCreateRecipe() throws Exception {
-        CreateRecipeCommand createRecipeCommand = CreateRecipeCommand.builder().title("Test Recipe").description("recipe description").userId(user.getId()).build();
+        CreateRecipeCommand createRecipeCommand = CreateRecipeCommand.builder().title("Test Recipe").description("recipe description").userId(user.getId())
+                .cookingTime(Duration.ZERO)
+                .servings(4L)
+                .ingredients("1 onion\n" +
+                        "2 ginger")
+                .cookingInstructions("1. cut onion\n" +
+                        "2. cut ginger and mix")
+                .build();
         mockMvc.perform(post("/recipe/create/user/" + user.getId())
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
