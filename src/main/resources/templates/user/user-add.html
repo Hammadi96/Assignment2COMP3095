@@ -1,5 +1,6 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
+<div th:replace="fragments/header :: header(page_title='Add new user')"></div>
 <body>
 <form action="#" th:action="@{/view/user/create}" th:object="${createUserCommand}" method="post">
     <table>

@@ -1,13 +1,14 @@
 package ca.gb.comp3095.foodrecipe.controller.recipe;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
-import java.time.Duration;
 import java.util.List;
 
 @Builder
 @Data
+@AllArgsConstructor
 public class CreateRecipeCommand {
     String title;
     String description;
@@ -17,6 +18,6 @@ public class CreateRecipeCommand {
     String cookingInstructions;
     Long servings;
     String imageUrl;
-    Duration cookingTime;
+    Long cookingTime;
     Long userId;
 }

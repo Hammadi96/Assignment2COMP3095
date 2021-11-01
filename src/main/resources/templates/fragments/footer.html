@@ -1,0 +1,7 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="footer">
+    <div class="alert" th:if="${message}">
+        <span class="closebtn" onclick="this.parentElement.style.display='none';" th:text="${message}">&times;</span>
+    </div>
+</div>

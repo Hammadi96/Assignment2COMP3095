@@ -1,13 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>User Details</title>
-</head>
+<div th:replace="fragments/header :: header(page_title='User Details')"></div>
 <body>
-<div class="alert" th:if="${message}">
-    <span class="closebtn" onclick="this.parentElement.style.display='none';" th:text="${message}">&times;</span>
-</div>
 
 <div th:if="${user}">
     <table>
@@ -36,5 +30,6 @@
         </tr>
     </table>
 </div>
+<div th:replace="fragments/footer :: footer"></div>
 </body>
 </html>

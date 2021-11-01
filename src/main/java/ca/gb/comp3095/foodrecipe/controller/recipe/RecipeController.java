@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.Duration;
+
 @RestController
 @RequestMapping(value = "/recipe", produces = {MediaType.APPLICATION_JSON_VALUE})
 @Slf4j
@@ -41,7 +43,7 @@ public class RecipeController {
             Recipe recipe = Recipe.builder().user(User.builder().id(userId).build())
                     .title(createRecipeCommand.getTitle())
                     .description(createRecipeCommand.getDescription())
-                    .cookingTime(createRecipeCommand.getCookingTime())
+                    .cookingTime(Duration.parse(String.format("PT%dM", createRecipeCommand.getCookingTime())))
                     .servings(createRecipeCommand.getServings())
                     .imageUrl(createRecipeCommand.getImageUrl())
                     .ingredients(createRecipeCommand.getIngredients())

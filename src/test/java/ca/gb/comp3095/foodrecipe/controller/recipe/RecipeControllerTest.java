@@ -14,8 +14,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.time.Duration;
-
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -50,7 +48,7 @@ class RecipeControllerTest {
     @Test
     void shouldCreateRecipe() throws Exception {
         CreateRecipeCommand createRecipeCommand = CreateRecipeCommand.builder().title("Test Recipe").description("recipe description").userId(user.getId())
-                .cookingTime(Duration.ZERO)
+                .cookingTime(10L)
                 .servings(4L)
                 .ingredients("1 onion\n" +
                         "2 ginger")
