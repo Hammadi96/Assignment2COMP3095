@@ -25,6 +25,11 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     @Override
+    public Recipe updateRecipe(Recipe recipe) {
+        return recipeRespository.save(recipe);
+    }
+
+    @Override
     public List<Recipe> getAllRecipesForUser(Long userId) {
         return recipeRespository.findAllByUserId(userId);
     }

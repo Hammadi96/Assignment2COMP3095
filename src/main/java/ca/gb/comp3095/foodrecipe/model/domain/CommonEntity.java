@@ -22,7 +22,7 @@ public class CommonEntity {
     @CreationTimestamp
     protected Instant creationTime;
 
-    @Column(updatable = false)
+    @Column
     @Type(type = "org.hibernate.type.InstantType")
     @UpdateTimestamp
     protected Instant modificationTime;

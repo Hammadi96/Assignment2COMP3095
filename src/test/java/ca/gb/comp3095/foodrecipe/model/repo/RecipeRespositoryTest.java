@@ -69,4 +69,22 @@ class RecipeRespositoryTest {
 
         recipeRespository.deleteAll();
     }
+
+    @Test
+    void itUpdatesRecipe() {
+        Recipe recipe = RecipeTestFactory.getRecipeForUser(User.builder().id(testUser.getId()).build(), "some recipe", "some details");
+        Recipe savedRecipe = recipeRespository.save(recipe);
+        String oldInstructions = savedRecipe.getInstructions();
+        Assertions.assertNotNull(savedRecipe);
+
+        String newInstructions = "dummy instructions 2 !";
+        recipe.setInstructions(newInstructions);
+        recipeRespository.save(recipe);
+        recipeRespository.flush();
+
+        savedRecipe = recipeRespository.findById(savedRecipe.getId()).get();
+        Assertions.assertEquals(newInstructions, savedRecipe.getInstructions());
+        Assertions.assertNotEquals(oldInstructions, newInstructions);
+        recipeRespository.deleteAll();
+    }
 }

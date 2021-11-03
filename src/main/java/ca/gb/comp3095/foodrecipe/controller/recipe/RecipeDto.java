@@ -1,22 +1,34 @@
 package ca.gb.comp3095.foodrecipe.controller.recipe;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
-import java.time.Duration;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.time.Instant;
 
 @Data
 @Builder(toBuilder = true)
+@AllArgsConstructor
 public class RecipeDto {
     Instant creationTime;
+    Instant lastModified;
+    @NotNull
     Long id;
+    @NotEmpty
     String title;
+    @NotEmpty
     String description;
     String imageUrl;
-    Duration cookingTime;
+    @NotNull
+    Long cookingTime;
+    @NotNull
     Long servings;
+    @NotNull @NotEmpty
     String instructions;
+    @NotNull @NotEmpty
     String ingredients;
+    @NotNull
     Long userId;
 }

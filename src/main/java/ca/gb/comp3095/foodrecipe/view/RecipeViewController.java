@@ -27,16 +27,61 @@ public class RecipeViewController {
     @Autowired
     RecipeService recipeService;
 
+    @PostMapping("/edit/{id}")
+    public String editRecipe(@PathVariable Long id, @Validated RecipeDto recipeDto, BindingResult bindingResult, Model model) {
+        log.debug("editing recipe {}", id);
+        Optional<Recipe> recipe = recipeService.getRecipeById(id);
+        if (recipe.isEmpty()) {
+            recipeNotFoundMessage(id, model);
+        } else {
+            model.addAttribute("recipe", RecipeConverter.toDto(recipe.get()));
+        }
+        if (bindingResult.hasErrors()) {
+            return "redirect:/view/recipe/" + id;
+        }
+
+        try {
+            Recipe newRecipe = RecipeConverter.toDomain(recipeDto);
+            newRecipe.setUser(recipe.get().getUser());
+            newRecipe.setId(id);
+            model.addAttribute("recip", RecipeConverter.toDto(recipeService.updateRecipe(newRecipe)));
+        } catch (Exception e) {
+            log.warn("Unable to update recipe {}", recipeDto, e);
+            recipeNotFoundMessage(id, model);
+        }
+        return "redirect:/view/recipe/" + id;
+    }
+
+    private void recipeNotFoundMessage(@PathVariable Long id, Model model) {
+        model.addAttribute("message", "No recipe found with id " + id);
+    }
+
     @GetMapping("/{id}")
     public String viewRecipe(@PathVariable Long id, Model model) {
         Optional<Recipe> recipe = recipeService.getRecipeById(id);
         recipe.ifPresent(r -> model.addAttribute("recipe", RecipeConverter.toDto(r)));
+        if (recipe.isEmpty()) {
+            recipeNotFoundMessage(id, model);
+        }
         return "recipe/recipe";
     }
 
     @GetMapping("/create")
     public String createNewRecipe(CreateRecipeCommand createRecipeCommand) {
         return "recipe/new-recipe";
+    }
+
+    @GetMapping("/edit/{id}")
+    public String editRecipe(@PathVariable Long id, Model model) {
+        Optional<Recipe> recipe = recipeService.getRecipeById(id);
+        recipe.ifPresent(r -> {
+            log.info("recipe found for id {}", id);
+            model.addAttribute("recipe", RecipeConverter.toDto(r));
+        });
+        if (recipe.isEmpty()) {
+            recipeNotFoundMessage(id, model);
+        }
+        return "recipe/edit-recipe";
     }
 
     @PostMapping("/create")
@@ -67,10 +112,8 @@ public class RecipeViewController {
         }
     }
 
-    @GetMapping("/edit-recipe/{id}")
-    public String editRecipe(@PathVariable Long id, Model model) {
-        log.debug("editing recipe {}", id);
-        model.addAttribute("recipeId", id);
-        return "recipe/edit-recipe";
+    @GetMapping("/search")
+    public String searchRecipe(Model model) {
+        return "recipe/search-recipe";
     }
 }

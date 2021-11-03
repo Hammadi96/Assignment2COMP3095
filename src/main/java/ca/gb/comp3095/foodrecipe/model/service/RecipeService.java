@@ -10,5 +10,7 @@ public interface RecipeService {
 
     Optional<Recipe> getRecipeById(Long id);
 
+    Recipe updateRecipe(Recipe recipe);
+
     List<Recipe> getAllRecipesForUser(Long userId);
 }

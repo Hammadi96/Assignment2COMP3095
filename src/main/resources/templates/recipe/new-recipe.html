@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Create New Recipe</title>
-</head>
+<div th:replace="fragments/header :: header(page_title='Create new recipe')"></div>
 <body>
 <form action="#" th:action="@{/view/recipe/create}" th:object="${createRecipeCommand}" method="post">
 
