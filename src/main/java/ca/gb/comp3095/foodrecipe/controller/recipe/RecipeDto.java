@@ -6,12 +6,13 @@ import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.time.Instant;
 
 @Data
 @Builder(toBuilder = true)
 @AllArgsConstructor
-public class RecipeDto {
+public class RecipeDto implements Serializable {
     Instant creationTime;
     Instant lastModified;
     @NotNull

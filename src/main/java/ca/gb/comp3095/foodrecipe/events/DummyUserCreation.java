@@ -11,6 +11,7 @@ import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PreDestroy;
+import java.time.Duration;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,6 +33,7 @@ public class DummyUserCreation {
                 .email("test@food-recipe.com")
                 .password("test")
                 .build());
+        recipeRespository.save(Recipe.builder().title("dummy title").description("dummy description").ingredients("onion").instructions("cut onions").cookingTime(Duration.ofMinutes(10)).servings(2L).user(dummyUser).build());
         log.info("User created successfully {}", dummyUser);
     }
 

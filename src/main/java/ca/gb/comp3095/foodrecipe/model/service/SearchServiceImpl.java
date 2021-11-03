@@ -29,7 +29,7 @@ public class SearchServiceImpl implements SearchService {
     BiPredicate<Recipe, SearchRecipeCommand> titleSearch = ((recipe, searchRecipeCommand) -> matchAboveThreshold.test(recipe.getTitle(), searchRecipeCommand.getTitle()));
     BiPredicate<Recipe, SearchRecipeCommand> descriptionSearch = ((recipe, searchRecipeCommand) -> matchAboveThreshold.test(recipe.getDescription(), searchRecipeCommand.getDescription()));
     BiPredicate<Recipe, SearchRecipeCommand> ingredientSearch = ((recipe, searchRecipeCommand) -> matchAboveThreshold.test(recipe.getIngredients(), searchRecipeCommand.getIngredients()));
-    BiPredicate<Recipe, SearchRecipeCommand> cookingTimeUnderSearch = ((recipe, searchRecipeCommand) -> isNotNull.test(recipe.getCookingTime()) && recipe.getCookingTime().toMinutes() < searchRecipeCommand.getCookingTimeUnder());
+    BiPredicate<Recipe, SearchRecipeCommand> cookingTimeUnderSearch = ((recipe, searchRecipeCommand) -> isNotNull.test(recipe.getCookingTime()) && isNotNull.test(searchRecipeCommand.getCookingTimeUnder()) && recipe.getCookingTime().toMinutes() < searchRecipeCommand.getCookingTimeUnder());
 
     BiPredicate<Recipe, SearchRecipeCommand> searchFilters = List.of(titleSearch, descriptionSearch, ingredientSearch, cookingTimeUnderSearch).stream().reduce(BiPredicate::or).orElse((r, s) -> false);
 
