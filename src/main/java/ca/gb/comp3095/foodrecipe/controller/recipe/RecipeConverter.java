@@ -14,7 +14,7 @@ public class RecipeConverter {
                 .description(recipeDto.getDescription())
                 .cookingTime(Duration.parse(String.format("PT%dM", recipeDto.getCookingTime())))
                 .servings(recipeDto.getServings())
-                .instructions(recipeDto.getInstructions())
+                .instructions(recipeDto.getCookingInstructions())
                 .ingredients(recipeDto.getIngredients())
                 .user(User.builder().id(recipeDto.getUserId()).build()).build();
     }
@@ -27,7 +27,7 @@ public class RecipeConverter {
                 .description(recipe.getDescription())
                 .cookingTime(recipe.getCookingTime().toMinutes())
                 .servings(recipe.getServings())
-                .instructions(recipe.getInstructions())
+                .cookingInstructions(recipe.getInstructions())
                 .ingredients(recipe.getIngredients())
                 .userId(recipe.getUser().getId()).build();
     }

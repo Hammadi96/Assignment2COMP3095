@@ -1,24 +1,36 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <div th:replace="fragments/header :: header(page_title='Search Results')"></div>
-<body>
+<body class="container">
 
-<!--<label for="site-search">Search for delicious recipes</label>-->
-<!--<input type="search" id="site-search" name="q"-->
-<!--       aria-label="Search for Recipes">-->
-
-<!--<button>Search</button>-->
 
 <div th:if="${recipes}">
-    <table>
-        <tr th:each="recipe : ${recipes}">
-            <td><a th:href="@{'/view/recipe/' + ${recipe.id}}" th:text="${recipe.title}"/></td>
-            <td th:text="${recipe.description}"/>
-            <td th:text="${recipe.cookingTime} + ' minutes'"/>
-            <td th:text="${recipe.servings} + ' servings'"/>
-            <!--            <p th:text="${recipe}"/>-->
-        </tr>
-    </table>
+
+    <div class="card" th:each="recipe : ${recipes}">
+        <div class="card-header">
+            <span class="cooking-time" th:text="${recipe.cookingTime} + ' minutes'"/>
+            |
+            <span class="servings" th:text="${recipe.servings} + ' minutes'"/>
+
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">
+                <a th:href="@{'/view/recipe/' + ${recipe.id}}" th:text="${recipe.title}"/>
+            </h5>
+            <p class="card-text" th:text="${recipe.description}"/>
+            <!--            <a href="#" class="btn btn-primary">Go somewhere</a>-->
+        </div>
+    </div>
+
+    <!--    <table>-->
+    <!--        <tr th:each="recipe : ${recipes}">-->
+    <!--            <td><a th:href="@{'/view/recipe/' + ${recipe.id}}" th:text="${recipe.title}"/></td>-->
+    <!--            <td th:text="${recipe.description}"/>-->
+    <!--            <td th:text="${recipe.cookingTime} + ' minutes'"/>-->
+    <!--            <td th:text="${recipe.servings} + ' servings'"/>-->
+    <!--            &lt;!&ndash;            <p th:text="${recipe}"/>&ndash;&gt;-->
+    <!--        </tr>-->
+    <!--    </table>-->
 </div>
 <div th:replace="fragments/footer :: footer"></div>
 </body>

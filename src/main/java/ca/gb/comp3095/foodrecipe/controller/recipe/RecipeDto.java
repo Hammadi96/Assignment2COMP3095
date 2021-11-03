@@ -27,7 +27,7 @@ public class RecipeDto implements Serializable {
     @NotNull
     Long servings;
     @NotNull @NotEmpty
-    String instructions;
+    String cookingInstructions;
     @NotNull @NotEmpty
     String ingredients;
     @NotNull

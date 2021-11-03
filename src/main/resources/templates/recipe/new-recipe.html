@@ -2,60 +2,16 @@
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 <div th:replace="fragments/header :: header(page_title='Create new recipe')"></div>
 <body>
-<form action="#" th:action="@{/view/recipe/create}" th:object="${createRecipeCommand}" method="post">
-
-    <div class="rendered-form">
-        <div class="formbuilder-text form-group field-recipe-title">
-            <label for="recipe-title" class="formbuilder-text-label">Recipe Title<span
-                    class="formbuilder-required">*</span><span class="tooltip-element"
-                                                               tooltip="recipe title">?</span></label>
-            <input type="text" class="recipe-form" th:field="*{title}" access="false" id="recipe-title"
-                   title="recipe title" required="required" aria-required="true">
-        </div>
-        <div class="formbuilder-number form-group field-cooking-time">
-            <label for="cooking-time" class="formbuilder-number-label">Cooking Time in minutes<span
-                    class="formbuilder-required">*</span></label>
-            <input type="number" class="form-control" th:field="*{cookingTime}" access="false" id="cooking-time"
-                   required="required" aria-required="true">
-        </div>
-        <div class="formbuilder-number form-group field-servings">
-            <label for="servings" class="formbuilder-number-label">Servings<span
-                    class="formbuilder-required">*</span></label>
-            <input type="number" class="form-control" th:field="*{servings}" access="false" id="servings"
-                   required="required" aria-required="true">
-        </div>
-        <div class="formbuilder-textarea form-group field-recipe-description">
-            <label for="recipe-description" class="formbuilder-textarea-label">Description<span
-                    class="formbuilder-required">*</span><span class="tooltip-element"
-                                                               tooltip="Recipe information">?</span></label>
-            <textarea type="textarea" class="form-control" th:field="*{description}" access="false"
-                      id="recipe-description" title="Recipe information" required="required"
-                      aria-required="true"></textarea>
-        </div>
-        <div class="formbuilder-textarea form-group field-ingredients">
-            <label for="ingredients" class="formbuilder-textarea-label">Ingredient List<span
-                    class="formbuilder-required">*</span></label>
-            <textarea type="textarea" class="form-control" th:field="*{ingredients}" access="false" id="ingredients"
-                      required="required" aria-required="true"></textarea>
-        </div>
-        <div class="formbuilder-textarea form-group field-instructions">
-            <label for="instructions" class="formbuilder-textarea-label">Instructions<span class="formbuilder-required">*</span></label>
-            <textarea type="textarea" class="form-control" th:field="*{cookingInstructions}" access="false"
-                      id="instructions"
-                      required="required" aria-required="true"></textarea>
-        </div>
-
-        <input type="hidden" name="userId" th:value="1" access="false" id="userId">
-
+<div class="container">
+    <form action="#" th:action="@{/view/recipe/create}" th:object="${createRecipeCommand}" method="post">
+        <div th:replace="fragments/recipe-form-fragment :: new-recipe-form"></div>
         <div class="formbuilder-button form-group field-create">
-            <button type="submit" class="btn-default btn" name="create" access="false" style="default" id="create">
+            <button type="submit" class="btn-primary btn" name="create" access="false" style="default" id="create">
                 Create
             </button>
         </div>
-
-    </div>
-</form>
-
+    </form>
+</div>
 <div th:replace="fragments/footer :: footer"></div>
 </body>
 </html>

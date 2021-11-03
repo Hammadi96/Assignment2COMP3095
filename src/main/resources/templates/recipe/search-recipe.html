@@ -2,14 +2,23 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <div th:replace="fragments/header :: header(page_title='Search Recipes')"></div>
 <body>
-<form action="#" th:action="@{'/recipe/search'}" th:object="${searchRecipeCommand}" method="post">
-    <label for="site-search">Search for delicious recipes</label>
-    <input type="search" id="site-search" name="q" th:field="*{title}"
-           aria-label="Search for Recipes">
-
-    <button>Search</button>
-</form>
-
+<div class="container">
+    <form action="#" class="navbar-form" th:action="@{'/recipe/search'}" th:object="${searchRecipeCommand}"
+          method="post">
+        <div class="input-group col-lg-12">
+            <div class="form-group" style="width:100%">
+                <label for="site-search">Search for delicious recipes</label>
+                <input type="text" id="site-search" style="width:100%" name="q" th:field="*{title}"
+                       aria-label="Search for Recipes">
+            </div>
+            <div class="formbuilder-button form-group field-create">
+                <button class="btn btn-primary" type="submit" id="recipe-search">
+                    Search
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
 <div th:replace="fragments/footer :: footer"></div>
 </body>
 </html>
