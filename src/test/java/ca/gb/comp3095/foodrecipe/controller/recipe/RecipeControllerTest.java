@@ -4,6 +4,7 @@ import ca.gb.comp3095.foodrecipe.model.UserTestFactory;
 import ca.gb.comp3095.foodrecipe.model.domain.User;
 import ca.gb.comp3095.foodrecipe.model.repo.RecipeRespository;
 import ca.gb.comp3095.foodrecipe.model.service.UserService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,6 +14,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+
+import java.util.List;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -62,4 +65,14 @@ class RecipeControllerTest {
                 .andExpect(status().isCreated());
     }
 
+    @Test
+    void recipeDtoSerialisation() throws JsonProcessingException {
+        RecipeDto recipe1 = RecipeDto.builder().title("title").description("description1").ingredients("ingredients").cookingInstructions("instructions").imageUrl("http://image.url.com").cookingTime(10L).servings(2L).userId(1L).build();
+        RecipeDto recipe2 = RecipeDto.builder().title("title").description("description1").ingredients("ingredients").cookingInstructions("instructions").imageUrl("http://image.url.com").cookingTime(10L).servings(2L).userId(1L).build();
+        RecipeDto recipe3 = RecipeDto.builder().title("title").description("description1").ingredients("ingredients").cookingInstructions("instructions").imageUrl("http://image.url.com").cookingTime(10L).servings(2L).userId(1L).build();
+
+        List<RecipeDto> recipeDtoList = List.of(recipe1, recipe2, recipe3);
+
+        System.out.println(objectMapper.writeValueAsString(recipeDtoList));
+    }
 }

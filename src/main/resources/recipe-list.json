@@ -1,0 +1,44 @@
+[
+  {
+    "creationTime": null,
+    "lastModified": null,
+    "id": null,
+    "title": "title",
+    "description": "description1",
+    "imageUrl": "http://image.url.com",
+    "cookingTime": 10,
+    "servings": 2,
+    "cookingInstructions": "instructions",
+    "ingredients": "ingredients",
+    "userId": 1,
+    "submittedBy": null
+  },
+  {
+    "creationTime": null,
+    "lastModified": null,
+    "id": null,
+    "title": "title",
+    "description": "description1",
+    "imageUrl": "http://image.url.com",
+    "cookingTime": 10,
+    "servings": 2,
+    "cookingInstructions": "instructions",
+    "ingredients": "ingredients",
+    "userId": 1,
+    "submittedBy": null
+  },
+  {
+    "creationTime": null,
+    "lastModified": null,
+    "id": null,
+    "title": "title",
+    "description": "description1",
+    "imageUrl": "http://image.url.com",
+    "cookingTime": 10,
+    "servings": 2,
+    "cookingInstructions": "instructions",
+    "ingredients": "ingredients",
+    "userId": 1,
+    "submittedBy": null
+  }
+]
