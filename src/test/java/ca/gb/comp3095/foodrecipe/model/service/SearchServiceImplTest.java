@@ -87,7 +87,7 @@ class SearchServiceImplTest {
 
         SearchRecipeCommand searchRecipeCommand = SearchRecipeCommand.builder().title("ginger").build();
         List<Recipe> recipeList = searchService.findAllBy(searchRecipeCommand);
-        Assertions.assertThat(recipeList).isEmpty();
+        Assertions.assertThat(recipeList).doesNotContain(recipe1, recipe2, recipe3, recipe4);
 
         searchRecipeCommand = SearchRecipeCommand.builder().description("onion").build();
         recipeList = searchService.findAllBy(searchRecipeCommand);

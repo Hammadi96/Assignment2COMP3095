@@ -28,6 +28,7 @@ class RecipeRespositoryTest {
     @BeforeEach
     void setUp() {
         testUser = userRepository.save(UserTestFactory.aRandomUser("test-user"));
+        recipeRespository.deleteAll();
     }
 
     @AfterEach
