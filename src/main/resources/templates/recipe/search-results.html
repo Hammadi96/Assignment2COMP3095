@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <div th:replace="fragments/header :: header(page_title='Search Results')"></div>
-<body class="container">
+<body>
+<nav th:replace="fragments/header :: navbar"/>
 
-
-<div th:if="${recipes}">
+<div class="container" th:if="${recipes}">
 
     <div class="card" th:each="recipe : ${recipes}">
         <div class="card-header">
-            <span class="cooking-time" th:text="${recipe.cookingTime} + ' minutes'"/>
-            |
-            <span class="servings" th:text="${recipe.servings} + ' minutes'"/>
+            <i class="far fa-clock"></i> <span class="cooking-time" th:text="${recipe.cookingTime} + ' minutes'"/>
+
+            <i class="fas fa-utensils"></i> <span class="servings" th:text="${recipe.servings} + ' people'"/>
 
         </div>
         <div class="card-body">

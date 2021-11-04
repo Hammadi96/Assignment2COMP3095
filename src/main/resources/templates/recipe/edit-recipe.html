@@ -2,10 +2,10 @@
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 <div th:replace="fragments/header :: header(page_title='Edit Recipe')"></div>
 <body>
-
+<nav th:replace="fragments/header :: navbar"/>
 <div class="container" th:if="${recipe}">
     <form action="#" th:action="@{'/view/recipe/edit/' + ${recipe.id}}" th:object="${recipe}" method="post">
-<!--        <p th:text="${recipe}"/>-->
+        <!--        <p th:text="${recipe}"/>-->
         <div th:replace="fragments/recipe-form-fragment :: new-recipe-form"></div>
 
         <div class="formbuilder-button form-group field-create">

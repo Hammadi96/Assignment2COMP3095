@@ -2,6 +2,7 @@
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 <div th:replace="fragments/header :: header(page_title='Create new recipe')"></div>
 <body>
+<nav th:replace="fragments/header :: navbar"/>
 <div class="container">
     <form action="#" th:action="@{/view/recipe/create}" th:object="${createRecipeCommand}" method="post">
         <div th:replace="fragments/recipe-form-fragment :: new-recipe-form"></div>

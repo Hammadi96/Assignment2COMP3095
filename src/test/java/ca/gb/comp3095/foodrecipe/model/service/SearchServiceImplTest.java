@@ -59,17 +59,39 @@ class SearchServiceImplTest {
 
         List<Recipe> recipeList = searchService.findAllBy(searchRecipeCommand);
         Assertions.assertThat(recipeList).isNotEmpty();
-        Assertions.assertThat(recipeList).hasSize(2);
+        Assertions.assertThat(recipeList).contains(recipe1, recipe3);
+        Assertions.assertThat(recipeList).doesNotContain(recipe2, recipe4);
 
         searchRecipeCommand = SearchRecipeCommand.builder().description("onion").build();
         recipeList = searchService.findAllBy(searchRecipeCommand);
         Assertions.assertThat(recipeList).isNotEmpty();
-        Assertions.assertThat(recipeList).hasSize(2);
+        Assertions.assertThat(recipeList).contains(recipe1, recipe3);
 
         searchRecipeCommand = SearchRecipeCommand.builder().description("lkj;alkdjfa;lkdjf").build();
         recipeList = searchService.findAllBy(searchRecipeCommand);
         Assertions.assertThat(recipeList).isEmpty();
 
+    }
 
+    @Test
+    void itFindsByDescription() {
+        Recipe recipe1 = RecipeTestFactory.getRecipeForUser(user, "R1", "dummy");
+        Recipe recipe2 = RecipeTestFactory.getRecipeForUser(user, "R2", "dumb");
+        Recipe recipe3 = RecipeTestFactory.getRecipeForUser(user, "R3", "onion");
+        Recipe recipe4 = RecipeTestFactory.getRecipeForUser(user, "onions", "l");
+
+        recipe1 = recipeService.createRecipe(recipe1);
+        recipe2 = recipeService.createRecipe(recipe2);
+        recipe3 = recipeService.createRecipe(recipe3);
+        recipe4 = recipeService.createRecipe(recipe4);
+
+        SearchRecipeCommand searchRecipeCommand = SearchRecipeCommand.builder().title("ginger").build();
+        List<Recipe> recipeList = searchService.findAllBy(searchRecipeCommand);
+        Assertions.assertThat(recipeList).isEmpty();
+
+        searchRecipeCommand = SearchRecipeCommand.builder().description("onion").build();
+        recipeList = searchService.findAllBy(searchRecipeCommand);
+        Assertions.assertThat(recipeList).isNotEmpty();
+        Assertions.assertThat(recipeList).contains(recipe3, recipe4);
     }
 }

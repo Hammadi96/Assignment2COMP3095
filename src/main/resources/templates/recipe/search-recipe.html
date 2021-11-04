@@ -2,6 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <div th:replace="fragments/header :: header(page_title='Search Recipes')"></div>
 <body>
+<nav th:replace="fragments/header :: navbar"/>
 <div class="container">
     <form action="#" class="navbar-form" th:action="@{'/recipe/search'}" th:object="${searchRecipeCommand}"
           method="post">
