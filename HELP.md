@@ -30,3 +30,27 @@ These additional references should also help you:
 
 * [Gradle Build Scans – insights for your project's build](https://scans.gradle.com#gradle)
 
+### how to run front end 
+
+1. checkout branch `frontend`
+
+```shell
+git checkout frontend
+```
+
+2. run spring boot app with gradle wrapper
+
+```shell
+./gradlew bootRun
+```
+
+This will create a single user, and a dummy recipe
+
+3. Search for 'Dummy' recipe, from `http://localhost:8080` (in the web browser)
+
+### Create Recipes
+
+1. head to `http://localhost:8080/view/recipe/create`
+
+### Edit recipe with ID
+1. You can edit recipe if you know the recipe id from `http://localhost:8080/view/recipe/edit/{recipeId}` (replace {recipeId} with valid integer id for the recipe)
