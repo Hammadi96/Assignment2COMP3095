@@ -32,4 +32,6 @@ public class RecipeDto implements Serializable {
     String ingredients;
     @NotNull
     Long userId;
+    @NotNull
+    String submittedBy;
 }

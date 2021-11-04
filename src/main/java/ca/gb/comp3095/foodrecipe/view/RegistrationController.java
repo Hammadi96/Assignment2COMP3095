@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/register")
 public class RegistrationController {
-
+//TODO
     @GetMapping
     public String home(Model model) {
         return "register";

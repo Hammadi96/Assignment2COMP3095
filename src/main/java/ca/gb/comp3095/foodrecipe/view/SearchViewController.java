@@ -26,7 +26,6 @@ public class SearchViewController {
 
     @GetMapping()
     public String getSearch(SearchRecipeCommand searchRecipeCommand) {
-        log.info("getting search!");
         return "recipe/search-recipe";
     }
 

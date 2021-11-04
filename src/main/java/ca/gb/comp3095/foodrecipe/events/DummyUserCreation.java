@@ -29,7 +29,7 @@ public class DummyUserCreation {
     @EventListener(ApplicationReadyEvent.class)
     public void createDummyUser() {
         dummyUser = userService.createNewUser(User.builder()
-                .name("test")
+                .name("testUser")
                 .email("test@food-recipe.com")
                 .password("test")
                 .build());

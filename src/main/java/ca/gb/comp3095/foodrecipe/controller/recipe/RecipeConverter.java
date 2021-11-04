@@ -29,6 +29,7 @@ public class RecipeConverter {
                 .servings(recipe.getServings())
                 .cookingInstructions(recipe.getInstructions())
                 .ingredients(recipe.getIngredients())
+                .submittedBy(recipe.getUser().getName())
                 .userId(recipe.getUser().getId()).build();
     }
 }

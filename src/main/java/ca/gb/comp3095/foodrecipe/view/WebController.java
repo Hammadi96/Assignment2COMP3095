@@ -6,15 +6,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class WebController {
-    @GetMapping("/home")
+
+    @GetMapping(value = {"/home", "/"})
     public String greeting(Model model) {
         model.addAttribute("user", "test user");
-        return "home";
+        return "redirect:/recipe/search";
     }
 
     @GetMapping("/index")
     public String index(Model model) {
         model.addAttribute("user", "test user");
-        return "index";
+        return "redirect:/recipe/search";
     }
 }
