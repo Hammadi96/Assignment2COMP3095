@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Recipe Land</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body class="container">
+<p th:text="'Hello, ' + ${user} + '! This is protected!'"/>
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>

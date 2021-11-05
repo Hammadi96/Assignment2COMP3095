@@ -44,7 +44,14 @@ git checkout frontend
 ./gradlew bootRun
 ```
 
-This will create a single user, and a dummy recipe
+This will create a single user, and a dummy recipe. Sign in with using the following details:
+
+```shell
+user: testUser
+password: test
+```
+
+This is configured in class `WebSecurityConfig` class.
 
 3. Search for 'Dummy' recipe, from `http://localhost:8080` (in the web browser)
 
