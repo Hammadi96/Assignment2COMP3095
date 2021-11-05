@@ -1,0 +1,67 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:replace="fragments/header :: header(page_title='Sign Up to RecipeLand')"></div>
+<body>
+
+<nav th:fragment="navbar" class="navbar navbar-light mb-5" style="background-color: #e3f2fd;">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" th:href="@{'/'}">Recipe Land</a>
+        </div>
+        <form class="navbar-form navbar-left" th:action="@{'/recipe/search'}" method="post">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search" name="description">
+                <div class="input-group-btn">
+                    <button class="btn btn-default" type="submit">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="col-md-6 mx-auto text-center">
+        <div class="header-title">
+            <h1 class="wv-heading--title">
+                Signup — it’s free!
+            </h1>
+            <h2 class="wv-heading--subtitle">
+                Amazing land of recipes, one click away...
+            </h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 mx-auto">
+            <div class="myform form ">
+                <form action="" th:action="@{/user/create}" th:object="${createUserCommand}" method="post"
+                      name="user-signup-form">
+                    <div class="form-group">
+                        <input type="text" name="userName" class="form-control my-input" id="userName"
+                               placeholder="Name">
+                    </div>
+                    <div class="form-group">
+                        <input type="email" name="email" class="form-control my-input" id="email" placeholder="Email">
+                    </div>
+                    <div class="divider py-1 bg-dark"></div>
+
+                    <div class="form-group">
+                        <hr class="mt-5 mb-5">
+                        <input type="password" name="password" id="password" class="form-control my-input"
+                               placeholder="Password">
+                    </div>
+                    <div class="text-center ">
+                        <button type="submit" class="btn btn-primary btn-lg btn-block">Sign Up
+                        </button>
+                    </div>
+                    <p class="small mt-3">By signing up, you are indicating that you have read and agree to the <a
+                            href="#" class="ps-hero__content__link">Terms of Use</a> and <a href="#">Privacy Policy</a>.
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

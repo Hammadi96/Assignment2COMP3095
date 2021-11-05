@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 <div th:replace="fragments/header :: header(page_title='Recipe Details')"></div>
-<body class="container">
+<body>
 <nav th:replace="fragments/header :: navbar"/>
-<div class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 bd-content" th:if="${recipe}">
+<div class="container col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 bd-content" th:if="${recipe}">
 
     <div class="card" style="width: 18rem;">
         <!--        <img src="..." class="card-img-top" alt="...">-->
@@ -41,7 +41,6 @@
     </p>
 
 </div>
-
 <div th:replace="fragments/footer :: footer"></div>
 </body>
 </html>

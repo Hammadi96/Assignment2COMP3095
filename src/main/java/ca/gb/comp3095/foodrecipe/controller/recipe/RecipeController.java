@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.time.Duration;
 
 @RestController
-@RequestMapping(value = "/recipe", produces = {MediaType.APPLICATION_JSON_VALUE})
+@RequestMapping(value = "/v1/recipe", produces = {MediaType.APPLICATION_JSON_VALUE})
 @Slf4j
 public class RecipeController {
 

@@ -11,7 +11,7 @@
 </head>
 
 <body>
-<nav th:fragment="navbar" class="navbar navbar-inverse">
+<nav th:fragment="navbar" class="navbar navbar-light mb-5" style="background-color: #e3f2fd;">
     <div class="container-fluid">
         <div class="navbar-header">
             <a class="navbar-brand" th:href="@{'/'}">Recipe Land</a>
@@ -29,6 +29,8 @@
                 </div>
             </div>
         </form>
+
+        <a href="#" th:href="@{'/user/id/' + 1}"><i class="fa fa-fw fa-user"></i> Profile</a>
     </div>
 </nav>
 </body>

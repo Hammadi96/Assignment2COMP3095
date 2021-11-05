@@ -2,7 +2,9 @@ package ca.gb.comp3095.foodrecipe.controller.user;
 
 import ca.gb.comp3095.foodrecipe.model.domain.User;
 import ca.gb.comp3095.foodrecipe.model.service.UserService;
+import ca.gb.comp3095.foodrecipe.view.AttributeTags;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -16,8 +18,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import java.util.Optional;
+
 @Controller
-@RequestMapping(value = "/view/user", produces = {MediaType.APPLICATION_JSON_VALUE})
+@RequestMapping(value = "/user", produces = {MediaType.APPLICATION_JSON_VALUE})
 @Slf4j
 public class UserViewController implements WebMvcConfigurer {
     @Autowired
@@ -59,10 +63,41 @@ public class UserViewController implements WebMvcConfigurer {
         return "user/user-add";
     }
 
+    @PostMapping(path = "/{userId}/change-password")
+    public String changeUserPassword(@PathVariable("userId") Long userId, @Validated ChangeUserPasswordCommand changePasswordCommand, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            log.warn("Unable to change password, form has errors {}", bindingResult.getAllErrors());
+            return "redirect:/user/id/" + userId;
+        }
+
+        if (!StringUtils.equals(changePasswordCommand.getPassword1(), changePasswordCommand.getPassword2())) {
+            model.addAttribute(AttributeTags.ERROR, "Passwords do not match!");
+            return "redirect:/user/id/" + userId;
+        }
+
+        Optional<User> userById = userService.getUserById(userId);
+        if (userById.isEmpty()) {
+            log.warn("No user found for id {}", userId);
+            model.addAttribute(AttributeTags.ERROR, "Invalid user provided!");
+            return "redirect:/";
+        }
+
+        try {
+            User updatedUser = userService.changePassword(userId, changePasswordCommand.getPassword1());
+            model.addAttribute(AttributeTags.USER, UserConverter.fromDomain(updatedUser));
+            model.addAttribute(AttributeTags.SUCCESS, "Password changed successfully!");
+        } catch (Exception e) {
+            log.warn("unable to change password for user {} ", userById, e);
+            model.addAttribute(AttributeTags.USER, UserConverter.fromDomain(userById.get()));
+            model.addAttribute(AttributeTags.ERROR, "Unable to change password for user {}" + userById);
+        }
+        return "user/user";
+    }
+
     @PostMapping(path = "/create")
     public String createNewUser(@Validated CreateUserCommand createUserCommand, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            return "user/user-add";
+            return "user/signup";
         }
         try {
             User user = User.builder().name(createUserCommand.getUserName()).email(createUserCommand.getEmail()).password(createUserCommand.getPassword()).build();
@@ -75,4 +110,10 @@ public class UserViewController implements WebMvcConfigurer {
         }
         return "user/user";
     }
+
+    @GetMapping(path = "/signup")
+    public String signUp() {
+        return "user/signup";
+    }
+
 }

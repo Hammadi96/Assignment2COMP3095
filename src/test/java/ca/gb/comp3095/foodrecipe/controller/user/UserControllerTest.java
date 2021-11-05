@@ -23,7 +23,7 @@ class UserControllerTest {
     @Test
     void shouldCreateUser() throws Exception {
         CreateUserCommand createUserCommand = CreateUserCommand.builder().userName("test-user").password("password").build();
-        mockMvc.perform(post("/user/create")
+        mockMvc.perform(post("/v1/user/create")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(createUserCommand)))

@@ -58,7 +58,7 @@ class RecipeControllerTest {
                 .cookingInstructions("1. cut onion\n" +
                         "2. cut ginger and mix")
                 .build();
-        mockMvc.perform(post("/recipe/create/user/" + user.getId())
+        mockMvc.perform(post("/v1/recipe/create/user/" + user.getId())
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(createRecipeCommand)))

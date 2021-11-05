@@ -2,33 +2,79 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <div th:replace="fragments/header :: header(page_title='User Details')"></div>
 <body>
+<nav th:replace="fragments/header :: navbar"/>
+<!--<div class="container" th:if="${user}">-->
+<!--    <table>-->
+<!--        <tr>-->
+<!--            <td>UserName:</td>-->
+<!--            <td th:text="${user.getUserName()}"></td>-->
+<!--        </tr>-->
 
-<div class="container" th:if="${user}">
-    <table>
-        <tr>
-            <td>UserName:</td>
-            <td th:text="${user.getUserName()}"></td>
-        </tr>
+<!--        <tr>-->
+<!--            <td>Id:</td>-->
+<!--            <td th:text="${user.getId()}"></td>-->
+<!--        </tr>-->
 
-        <tr>
-            <td>Id:</td>
-            <td th:text="${user.getId()}"></td>
-        </tr>
+<!--        <tr>-->
+<!--            <td>Email:</td>-->
+<!--            <td th:text="${user.getEmail()}"></td>-->
+<!--        </tr>-->
+<!--        <tr>-->
+<!--            <td>Password:</td>-->
+<!--            <td th:text="${user.getPassword()}"></td>-->
+<!--        </tr>-->
 
-        <tr>
-            <td>Email:</td>
-            <td th:text="${user.getEmail()}"></td>
-        </tr>
-        <tr>
-            <td>Password:</td>
-            <td th:text="${user.getPassword()}"></td>
-        </tr>
+<!--        <tr>-->
+<!--            <td>Creation Time:</td>-->
+<!--            <td th:text="${user.getCreationTime()}"></td>-->
+<!--        </tr>-->
+<!--    </table>-->
+<!--</div>-->
 
-        <tr>
-            <td>Creation Time:</td>
-            <td th:text="${user.getCreationTime()}"></td>
-        </tr>
-    </table>
+
+<div class="container">
+    <div class="row login_box">
+        <div class="col-md-12 col-xs-12" align="center">
+<!--            <div class="line"><h3 th:text="${#dates.monthNameShort(user.getCreationTime())}"/></div>-->
+            <div class="outter"><i class="fa fa-user" aria-hidden="true"></i>
+                <img src="http://lorempixel.com/output/people-q-c-100-100-1.jpg" class="image-circle"/></div>
+            <h1 th:text="${'Hi ' + user.getUserName() + '!'}"/>
+        </div>
+        <div class="col-md-6 col-xs-6 follow line" align="center">
+            <h3>
+                0 <br/> <span>Recipes</span>
+            </h3>
+        </div>
+
+        <div class="col-md-12 col-xs-12 login_control form">
+
+            <div class="control">
+                <div class="label">Email Address</div>
+                <input type="text" class="form-control" value="admin@gmail.com"/>
+            </div>
+
+            <div class="control">
+                <div class="label">Password</div>
+                <input type="text" class="form-control" th:value="${user.getPassword()}" readonly="readonly"/>
+            </div>
+            <hr class="mt-3 mb-3">
+            <h4>Change Password</h4>
+
+            <form method="post" id="changePassword" th:action="@{'/user/' + 1 + '/change-password/'}" th:object="${changePasswordCommand}">
+                <input type="password" class="input-lg form-control" name="password1" id="password1" placeholder="New Password" autocomplete="off">
+                <input type="password" class="input-lg form-control mt-3" name="password2" id="password2" placeholder="Repeat Password" autocomplete="off">
+                <div class="text-center" >
+                    <button type="submit" class="btn btn-primary btn-lg btn-block mt-3" data-loading-text="Changing Password...">Change Password</button>
+                </div>
+            </form>
+
+
+
+        </div>
+
+
+
+    </div>
 </div>
 <div th:replace="fragments/footer :: footer"></div>
 </body>

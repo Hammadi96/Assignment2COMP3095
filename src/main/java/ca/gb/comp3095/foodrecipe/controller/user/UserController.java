@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(value = "/user", produces = {MediaType.APPLICATION_JSON_VALUE})
+@RequestMapping(value = "/v1/user", produces = {MediaType.APPLICATION_JSON_VALUE})
 @Slf4j
 public class UserController {
     @Autowired
