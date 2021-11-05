@@ -20,6 +20,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.time.Duration;
 import java.util.Optional;
 
+import static ca.gb.comp3095.foodrecipe.view.AttributeTags.ERROR;
+import static ca.gb.comp3095.foodrecipe.view.AttributeTags.RECIPE;
+import static ca.gb.comp3095.foodrecipe.view.AttributeTags.SUCCESS;
+
 @Controller
 @RequestMapping("/view/recipe")
 @Slf4j
@@ -30,36 +34,40 @@ public class RecipeViewController {
     @PostMapping("/edit/{id}")
     public String editRecipe(@PathVariable Long id, @Validated RecipeDto recipeDto, BindingResult bindingResult, Model model) {
         log.debug("editing recipe {}", id);
+        if (bindingResult.hasErrors()) {
+            log.warn("form has errors, please fix them before editing");
+            return "redirect:/view/recipe/" + id;
+        }
         Optional<Recipe> recipe = recipeService.getRecipeById(id);
         if (recipe.isEmpty()) {
             recipeNotFoundMessage(id, model);
-        } else {
-            model.addAttribute("recipe", RecipeConverter.toDto(recipe.get()));
+            return "redirect:/";
         }
-        if (bindingResult.hasErrors()) {
-            return "redirect:/view/recipe/" + id;
-        }
-
         try {
             Recipe newRecipe = RecipeConverter.toDomain(recipeDto);
             newRecipe.setUser(recipe.get().getUser());
             newRecipe.setId(id);
-            model.addAttribute("recip", RecipeConverter.toDto(recipeService.updateRecipe(newRecipe)));
+            RecipeDto updatedRecipe = RecipeConverter.toDto(recipeService.updateRecipe(newRecipe));
+            log.info("updated recipe {}", updatedRecipe);
+            model.addAttribute(RECIPE, String.valueOf(updatedRecipe));
+            model.addAttribute(SUCCESS, "Recipe " + id + " changed successfully!");
+            return viewRecipe(id, model);
         } catch (Exception e) {
             log.warn("Unable to update recipe {}", recipeDto, e);
+            model.addAttribute(ERROR, "Unable to update recipe!");
             recipeNotFoundMessage(id, model);
+            return "redirect:/";
         }
-        return "redirect:/view/recipe/" + id;
     }
 
     private void recipeNotFoundMessage(@PathVariable Long id, Model model) {
-        model.addAttribute("message", "No recipe found with id " + id);
+        model.addAttribute(ERROR, "No recipe found with id " + id);
     }
 
     @GetMapping("/{id}")
     public String viewRecipe(@PathVariable Long id, Model model) {
         Optional<Recipe> recipe = recipeService.getRecipeById(id);
-        recipe.ifPresent(r -> model.addAttribute("recipe", RecipeConverter.toDto(r)));
+        recipe.ifPresent(r -> model.addAttribute(RECIPE, RecipeConverter.toDto(r)));
         if (recipe.isEmpty()) {
             recipeNotFoundMessage(id, model);
         }
@@ -76,7 +84,7 @@ public class RecipeViewController {
         Optional<Recipe> recipe = recipeService.getRecipeById(id);
         recipe.ifPresent(r -> {
             log.info("recipe found for id {}", id);
-            model.addAttribute("recipe", RecipeConverter.toDto(r));
+            model.addAttribute(RECIPE, RecipeConverter.toDto(r));
         });
         if (recipe.isEmpty()) {
             recipeNotFoundMessage(id, model);
@@ -103,11 +111,12 @@ public class RecipeViewController {
 
             RecipeDto recipeDto = RecipeConverter.toDto(recipeService.createRecipe(recipe));
             log.info("recipe created {}", recipeDto);
-            model.addAttribute("recipe", recipeDto);
+            model.addAttribute(RECIPE, recipeDto);
+            model.addAttribute(SUCCESS, "Recipe submitted successfully!");
             return "redirect:/view/recipe/" + recipeDto.getId();
         } catch (Exception e) {
             log.warn("Unable to create recipe command {}", createRecipeCommand, e);
-            model.addAttribute("message", "Unable to create recipe!");
+            model.addAttribute(ERROR, "Unable to create recipe!");
             return "recipe/recipe";
         }
     }

@@ -6,7 +6,6 @@ import ca.gb.comp3095.foodrecipe.controller.recipe.SearchRecipeCommand;
 import ca.gb.comp3095.foodrecipe.model.domain.Recipe;
 import ca.gb.comp3095.foodrecipe.model.service.SearchService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,10 +13,15 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static ca.gb.comp3095.foodrecipe.view.AttributeTags.ERROR;
+import static ca.gb.comp3095.foodrecipe.view.AttributeTags.MESSAGE;
+import static ca.gb.comp3095.foodrecipe.view.AttributeTags.RECIPES;
+import static ca.gb.comp3095.foodrecipe.view.AttributeTags.SUCCESS;
+import static ca.gb.comp3095.foodrecipe.view.AttributeTags.WARNING;
 
 @Controller
 @RequestMapping("/recipe/search")
@@ -31,30 +35,6 @@ public class SearchViewController {
         return "recipe/search-recipe";
     }
 
-//    @GetMapping()
-//    public String getSearchByQuery(@RequestParam(name = "query") String queryString, Model model) {
-//        if (StringUtils.isBlank(queryString)) {
-//            return "recipe/search-recipe";
-//        }
-//        try {
-//            List<Recipe> recipesFound = searchService.findAllBy(queryString);
-//            List<RecipeDto> recipeDtos = recipesFound.stream().map(RecipeConverter::toDto).collect(Collectors.toList());
-//            if (recipeDtos.isEmpty()) {
-//                model.addAttribute("message", "No recipes found for your search!");
-//                return "recipe/search-recipe";
-//            } else {
-//                model.addAttribute("recipes", recipeDtos);
-//                model.addAttribute("message", recipesFound.size() + " recipes found!");
-//            }
-//        } catch (Exception e) {
-//            log.warn("Unable to search for recipes with query={}", queryString, e);
-//            model.addAttribute("message", "unable to search recipes at the moment");
-//            return "recipe/search-recipe";
-//        }
-//
-//        return "recipe/search-results";
-//    }
-
     @PostMapping()
     public String searchByCommand(SearchRecipeCommand searchRecipeCommand, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
@@ -65,15 +45,15 @@ public class SearchViewController {
             List<Recipe> recipesFound = searchService.findAllBy(searchRecipeCommand);
             List<RecipeDto> recipeDtos = recipesFound.stream().map(RecipeConverter::toDto).collect(Collectors.toList());
             if (recipeDtos.isEmpty()) {
-                model.addAttribute("message", "No recipes found for your search!");
+                model.addAttribute(WARNING, "No recipes found for your search!");
                 return "recipe/search-recipe";
             } else {
-                model.addAttribute("recipes", recipeDtos);
-                model.addAttribute("message", recipesFound.size() + " recipes found!");
+                model.addAttribute(RECIPES, recipeDtos);
+                model.addAttribute(SUCCESS, recipesFound.size() + " recipe(s) found!");
             }
         } catch (Exception e) {
             log.warn("Unable to search for recipes {}", searchRecipeCommand, e);
-            model.addAttribute("message", "unable to search recipes at the moment");
+            model.addAttribute(ERROR, "unable to search recipes at the moment");
             return "recipe/search-recipe";
         }
         return "recipe/search-results";

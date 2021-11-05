@@ -1,9 +1,19 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <div th:fragment="footer">
-    <div class="alert" th:if="${message}">
+    <div class="alert alert-primary" th:if="${message}" role="alert">
         <span class="closebtn" onclick="this.parentElement.style.display='none';" th:text="${message}">&times;</span>
     </div>
+    <div class="alert alert-danger" th:if="${error}" role="alert">
+        <span class="closebtn" onclick="this.parentElement.style.display='none';" th:text="${error}">&times;</span>
+    </div>
+    <div class="alert alert-warning" th:if="${warning}" role="alert">
+        <span class="closebtn" onclick="this.parentElement.style.display='none';" th:text="${warning}">&times;</span>
+    </div>
+    <div class="alert alert-success" th:if="${success}" role="alert">
+        <span class="closebtn" onclick="this.parentElement.style.display='none';" th:text="${success}">&times;</span>
+    </div>
+
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
             integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
             crossorigin="anonymous"></script>
