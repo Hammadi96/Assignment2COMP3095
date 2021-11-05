@@ -63,13 +63,13 @@ public class SearchServiceImpl implements SearchService {
     private List<String> getQueryTerms(@NotNull SearchRecipeCommand searchRecipeCommand) {
         List<String> termList = new ArrayList<>();
 
-        if(StringUtils.isNotBlank(searchRecipeCommand.getTitle())) {
+        if (StringUtils.isNotBlank(searchRecipeCommand.getTitle())) {
             termList.add(searchRecipeCommand.getTitle());
         }
-        if(StringUtils.isNotBlank(searchRecipeCommand.getDescription())) {
+        if (StringUtils.isNotBlank(searchRecipeCommand.getDescription())) {
             termList.add(searchRecipeCommand.getDescription());
         }
-        if(StringUtils.isNotBlank(searchRecipeCommand.getIngredients())) {
+        if (StringUtils.isNotBlank(searchRecipeCommand.getIngredients())) {
             termList.add(searchRecipeCommand.getIngredients());
         }
 
@@ -88,5 +88,8 @@ public class SearchServiceImpl implements SearchService {
 
     }
 
-
+    @Override
+    public List<Recipe> findAll() {
+        return recipeRespository.findAll();
+    }
 }

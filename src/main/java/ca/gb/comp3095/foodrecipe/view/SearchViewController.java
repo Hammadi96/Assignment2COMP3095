@@ -18,7 +18,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static ca.gb.comp3095.foodrecipe.view.AttributeTags.ERROR;
-import static ca.gb.comp3095.foodrecipe.view.AttributeTags.MESSAGE;
 import static ca.gb.comp3095.foodrecipe.view.AttributeTags.RECIPES;
 import static ca.gb.comp3095.foodrecipe.view.AttributeTags.SUCCESS;
 import static ca.gb.comp3095.foodrecipe.view.AttributeTags.WARNING;
@@ -33,6 +32,18 @@ public class SearchViewController {
     @GetMapping()
     public String getSearch(SearchRecipeCommand searchRecipeCommand) {
         return "recipe/search-recipe";
+    }
+
+    @GetMapping("/all")
+    public String getAllRecipes(Model model) {
+        try {
+            List<RecipeDto> recipes = searchService.findAll().stream().map(RecipeConverter::toDto).collect(Collectors.toList());
+            model.addAttribute(RECIPES, recipes);
+        } catch (Exception e) {
+            log.warn("Unable to get all recipes", e);
+            model.addAttribute(ERROR, "Unable to get recipes at the moment!");
+        }
+        return "recipe/search-results";
     }
 
     @PostMapping()
@@ -58,4 +69,5 @@ public class SearchViewController {
         }
         return "recipe/search-results";
     }
+
 }

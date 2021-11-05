@@ -8,4 +8,5 @@ import java.util.List;
 public interface SearchService {
     List<Recipe> findAllBy(SearchRecipeCommand searchRecipeCommand);
     List<Recipe> findAllBy(String queryString);
+    List<Recipe> findAll();
 }
