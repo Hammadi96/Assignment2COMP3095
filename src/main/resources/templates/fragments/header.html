@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head th:fragment="header">
     <meta charset="UTF-8">
     <title th:text="${page_title}"></title>
@@ -38,11 +38,11 @@
         </ul>
 
         <ul class="nav navbar-nav navbar-right">
-            <a href="#" th:href="@{'/user/id/' + 1}"><i class="fa fa-fw fa-user"></i> Profile</a>
+            <a href="#" th:href="@{/user/details}"><i class="fa fa-fw fa-user"></i> Profile</a>
         </ul>
 
         <ul class="nav navbar-nav navbar-right">
-            <div class="input-group">
+            <div class="input-group" sec:authorize="isAuthenticated()">
                 <li><a th:href="@{/logout}"><i class="fas fa-sign-out-alt" aria-hidden="true"></i> Logout</a></li>
 
             </div>

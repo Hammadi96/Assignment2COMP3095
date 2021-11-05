@@ -6,8 +6,10 @@ import ca.gb.comp3095.foodrecipe.controller.recipe.RecipeDto;
 import ca.gb.comp3095.foodrecipe.model.domain.Recipe;
 import ca.gb.comp3095.foodrecipe.model.domain.User;
 import ca.gb.comp3095.foodrecipe.model.service.RecipeService;
+import ca.gb.comp3095.foodrecipe.model.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,12 +19,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.security.Principal;
 import java.time.Duration;
 import java.util.Optional;
 
 import static ca.gb.comp3095.foodrecipe.view.AttributeTags.ERROR;
 import static ca.gb.comp3095.foodrecipe.view.AttributeTags.RECIPE;
 import static ca.gb.comp3095.foodrecipe.view.AttributeTags.SUCCESS;
+import static ca.gb.comp3095.foodrecipe.view.AttributeTags.WARNING;
 
 @Controller
 @RequestMapping("/view/recipe")
@@ -31,8 +35,11 @@ public class RecipeViewController {
     @Autowired
     RecipeService recipeService;
 
+    @Autowired
+    UserService userService;
+
     @PostMapping("/edit/{id}")
-    public String editRecipe(@PathVariable Long id, @Validated RecipeDto recipeDto, BindingResult bindingResult, Model model) {
+    public String editRecipe(@PathVariable Long id, @Validated RecipeDto recipeDto, BindingResult bindingResult, Model model, Principal principal) {
         log.debug("editing recipe {}", id);
         if (bindingResult.hasErrors()) {
             log.warn("form has errors, please fix them before editing");
@@ -43,6 +50,18 @@ public class RecipeViewController {
             recipeNotFoundMessage(id, model);
             return "redirect:/";
         }
+        Optional<User> userByName = userService.getUserByName(principal.getName());
+        if (userByName.isEmpty()) {
+            log.warn("no user found for {}, stopping operation", principal.getName());
+            return "redirect:/";
+        }
+
+        if (!recipe.get().getUser().getName().equals(principal.getName())) {
+            log.warn("User {} cannot edit recipe, as it's owned by {}", principal.getName(), recipe.get().getUser().getName());
+            model.addAttribute(WARNING, "You are not allowed to edit the recipe " + id);
+            return "redirect:/";
+        }
+
         try {
             Recipe newRecipe = RecipeConverter.toDomain(recipeDto);
             newRecipe.setUser(recipe.get().getUser());
@@ -93,13 +112,20 @@ public class RecipeViewController {
     }
 
     @PostMapping("/create")
-    public String submitNewRecipe(@Validated CreateRecipeCommand createRecipeCommand, BindingResult bindingResult, Model model) {
+    @PreAuthorize("hasRole('USER')")
+    public String submitNewRecipe(@Validated CreateRecipeCommand createRecipeCommand, BindingResult bindingResult, Model model, Principal principal) {
         if (bindingResult.hasErrors()) {
             return "recipe/new-recipe";
         }
+        Optional<User> userByName = userService.getUserByName(principal.getName());
+        if (userByName.isEmpty()) {
+            log.warn("no user found for {}, stopping operation", principal.getName());
+            return "redirect:/";
+        }
+
         try {
             log.info("creating recipe {}", createRecipeCommand);
-            Recipe recipe = Recipe.builder().user(User.builder().id(createRecipeCommand.getUserId()).build())
+            Recipe recipe = Recipe.builder().user(User.builder().id(userByName.get().getId()).build())
                     .title(createRecipeCommand.getTitle())
                     .description(createRecipeCommand.getDescription())
                     .cookingTime(Duration.parse(String.format("PT%dM", createRecipeCommand.getCookingTime())))

@@ -24,7 +24,7 @@
             <li class="list-group-item" th:text="${recipe.getIngredients()}"/>
             <li class="list-group-item" th:text="${recipe.getCookingInstructions()}"/>
         </ul>
-        <div class="card-body">
+        <div class="card-body" th:if="${#authentication.getName().equalsIgnoreCase(recipe.getSubmittedBy())}">
             <a th:href="@{'/view/recipe/edit/' + ${recipe.id}}" class="card-link">Edit</a>
         </div>
     </div>
@@ -32,12 +32,12 @@
     <p>
     <h3>Submitted by: </h3>
     <div th:text="${recipe.getSubmittedBy()}"></div>
-    <div th:text="${recipe.getCreationTime()}"></div>
+    <div th:text="${#dates.format(recipe.getCreationTime(), 'dd-MMM-yyyy hh:mm aa')}"></div>
     </p>
 
     <p>
     <h3>Last updated: </h3>
-    <div th:text="${recipe.getLastModified()}"></div>
+    <div th:text="${#dates.format(recipe.getLastModified(), 'dd-MMM-yyyy hh:mm aa')}"></div>
     </p>
 
 </div>
