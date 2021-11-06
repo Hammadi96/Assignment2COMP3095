@@ -3,42 +3,68 @@
 <div th:replace="fragments/header :: header(page_title='Recipe Details')"></div>
 <body>
 <nav th:replace="fragments/header :: navbar"/>
-<div class="container col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 bd-content" th:if="${recipe}">
+<div class="container " th:if="${recipe}">
 
-    <div class="card" style="width: 18rem;">
+    <div class="card" style="width: 60rem;">
         <!--        <img src="..." class="card-img-top" alt="...">-->
         <div class="card-body">
-            <h5 class="card-title" th:text="${recipe.getTitle()}"/>
-            <div>
-                <i class="far fa-clock"></i> <span class="card-text" th:text="${recipe.getCookingTime()}"/>
+            <h4 class="card-title" th:text="${recipe.getTitle()}"/>
+            <figcaption class="blockquote-footer" th:text="${recipe.getSubmittedBy()}"></figcaption>
+
+            <div class="row ml-1 mt-2">
+                <div>
+                    <i class="far fa-clock"></i> <span class="card-text" th:text="${recipe.getCookingTime() + ' min'}"/>
+                </div>
+
+                <div class="ml-2">
+                    <i class="fas fa-utensils"></i> <span class="card-text" th:text="${recipe.getServings()}"/>
+                </div>
             </div>
 
-            <div>
-                <i class="fas fa-utensils"></i> <span class="card-text" th:text="${recipe.getServings()}"/>
-            </div>
-
-
-            <p class="card-text" th:text="${recipe.getDescription()}"/>
+            <div class="card-text mt-3" th:text="${recipe.getDescription()}"/>
         </div>
         <ul class="list-group list-group-flush">
-            <li class="list-group-item" th:text="${recipe.getIngredients()}"/>
-            <li class="list-group-item" th:text="${recipe.getCookingInstructions()}"/>
+            <li class="list-group-item">
+                <div class="row">
+                    <div class="col">
+                        <h5>Ingredients</h5>
+                        <div th:text="${recipe.getIngredients()}"/>
+                    </div>
+                    <div class="col">
+                        <h5>Directions</h5>
+                        <div th:text="${recipe.getCookingInstructions()}"/>
+                    </div>
+                </div>
+            </li>
         </ul>
         <div class="card-body">
             <a th:href="@{'/view/recipe/edit/' + ${recipe.id}}" class="card-link">Edit</a>
         </div>
+
+        <div class="list-group-flush d-flex justify-content-between">
+            <div class="ml-4">
+                <p>
+                <h5>Submitted On: </h5>
+
+                <div th:text="${#dates.format(recipe.getCreationTime(), 'dd-MMM-yyyy hh:mm aa')}"></div>
+                </p>
+            </div>
+            <div class="mr-4">
+                <p>
+                <h5>Last updated: </h5>
+                <div th:text="${#dates.format(recipe.getLastModified(), 'dd-MMM-yyyy hh:mm aa')}"></div>
+                </p>
+            </div>
+
+        </div>
+
     </div>
 
-    <p>
-    <h3>Submitted by: </h3>
-    <div th:text="${recipe.getSubmittedBy()}"></div>
-    <div th:text="${recipe.getCreationTime()}"></div>
-    </p>
 
-    <p>
-    <h3>Last updated: </h3>
-    <div th:text="${recipe.getLastModified()}"></div>
-    </p>
+
+
+
+
 
 </div>
 <div th:replace="fragments/footer :: footer"></div>
