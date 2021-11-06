@@ -27,16 +27,9 @@ dependencies {
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly 'com.h2database:h2'
-    runtimeOnly project('front-end')
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
-task copyWebApp(type: Copy) {
-    from '$rootDir/front-end/build/*'
-    into '$rootDir/src/main/resources/'
-}
-bootJar.dependsOn(copyWebApp)
-compileJava.dependsOn ':front-end:build'
 
 test {
     useJUnitPlatform()
