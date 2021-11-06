@@ -7,13 +7,15 @@
 <div class="container" th:if="${recipes}">
 
     <div class="card" th:each="recipe : ${recipes}">
-        <div class="card-header">
+        <div class="card-header ">
             <i class="far fa-clock"></i> <span class="cooking-time" th:text="${recipe.cookingTime} + ' minutes'"/>
 
             <i class="fas fa-utensils"></i> <span class="servings" th:text="${recipe.servings} + ' people'"/>
-            <div class="float-right ml-2" th:text="${#dates.format(recipe.getLastModified(), 'dd-MMM-yyyy hh:mm aa')}"/>
-            <div class="float-right" th:text="${'Submitted by: ' + recipe.getSubmittedBy() + ' on:'}"/>
-
+            <span class="text-secondary">
+                <div class="float-right ml-2"
+                     th:text="${#dates.format(recipe.getLastModified(), 'dd-MMM-yyyy hh:mm aa')}"/>
+                <div class="float-right" th:text="${'Submitted: ' + recipe.getSubmittedBy()}"/>
+            </span>
         </div>
         <div class="card-body">
             <h5 class="card-title">
