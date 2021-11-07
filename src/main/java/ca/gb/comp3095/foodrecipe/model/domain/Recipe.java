@@ -7,6 +7,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -36,8 +37,10 @@ public class Recipe extends CommonEntity {
 
     Long servings;
 
+    @Column(columnDefinition="TEXT")
     String instructions;
 
+    @Column(columnDefinition="TEXT")
     String ingredients;
 
     @OneToOne
