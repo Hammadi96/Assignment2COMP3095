@@ -14,11 +14,11 @@ import org.springframework.security.provisioning.UserDetailsManager;
 
 @Configuration
 @EnableWebSecurity
-@Profile("!test")
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+@Profile("test")
+public class WebSecurityTestConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
+        http.csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/user/signup", "/home", "/", "/user/create", "/v1/**").permitAll()
                 .anyRequest().authenticated()
