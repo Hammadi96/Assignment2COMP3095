@@ -34,4 +34,5 @@ public class RecipeDto implements Serializable {
     Long userId;
     @NotNull
     String submittedBy;
+    Boolean isLikedByCurrentUser;
 }

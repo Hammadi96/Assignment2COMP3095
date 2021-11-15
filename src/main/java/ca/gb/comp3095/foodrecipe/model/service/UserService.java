@@ -14,4 +14,7 @@ public interface UserService {
     User changePassword(Long id, String password);
 
     void deleteUserById(Long id);
+
+    User saveUser(User user);
+
 }

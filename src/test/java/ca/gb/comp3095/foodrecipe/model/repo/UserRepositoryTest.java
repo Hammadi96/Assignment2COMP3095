@@ -21,7 +21,7 @@ class UserRepositoryTest {
 
     @BeforeEach
     void setUp() {
-        user = userRepository.save(UserTestFactory.aRandomUser("test-user"));
+        user = userRepository.save(UserTestFactory.aRandomUser("random-test-user"));
     }
 
     @AfterEach

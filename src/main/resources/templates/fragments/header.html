@@ -24,6 +24,12 @@
         <ul class="nav navbar-nav">
             <li><a th:href="@{'/recipe/search/all'}">All Recipes</a></li>
         </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li><a th:href="@{/user/recipe/all}"><span class="fas fa-pizza-slice"></span> My Recipes</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li><a th:href="@{/user/recipe/favorites}"><span class="fas fa-heart"></span> My Favorites</a></li>
+        </ul>
         <form class="navbar-form navbar-left" th:action="@{'/recipe/search'}" method="post">
             <div class="input-group">
                 <input type="text" class="form-control" placeholder="Search" name="description">
@@ -37,7 +43,6 @@
         <ul class="nav navbar-nav navbar-right">
             <li><a th:href="@{/user/signup}"><span class="fas fa-user-plus"></span> Sign Up</a></li>
         </ul>
-
         <ul class="nav navbar-nav navbar-right">
             <a href="#" th:href="@{/user/details}"><i class="fa fa-fw fa-user"></i> Profile</a>
         </ul>
