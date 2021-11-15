@@ -36,10 +36,6 @@ import static ca.gb.comp3095.foodrecipe.view.AttributeTags.WARNING;
 public class UserRecipeViewController implements WebMvcConfigurer {
     @Autowired
     UserService userService;
-//
-//    @Qualifier("inMemoryUserDetailsManager")
-//    @Autowired
-//    UserDetailsManager userDetailsManager;
 
     @Autowired
     RecipeService recipeService;

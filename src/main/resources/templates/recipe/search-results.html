@@ -19,8 +19,10 @@
         </div>
         <div class="card-body">
             <div class="row h5">
-                <label for="id-of-input" class="custom-checkbox">
-                    <input type="checkbox" id="id-of-input"/>
+                <label th:for="${recipe.id}" class="custom-checkbox">
+                    <input type="checkbox" th:id="${recipe.id}"
+                           th:onclick="'toggleFavorite(this, \'/user/recipe/' + ${recipe.id} +'/favorite\' )'"
+                           th:checked="${recipe.isLikedByCurrentUser}"/>
                     <i class="glyphicon glyphicon-star-empty far fa-heart"></i>
                     <i class="glyphicon glyphicon-star fas fa-heart"></i>
                     <a th:href="@{'/view/recipe/' + ${recipe.id}}" class="ml-1" th:text="${recipe.title}"/>
