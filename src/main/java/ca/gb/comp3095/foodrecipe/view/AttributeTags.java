@@ -7,8 +7,10 @@ public class AttributeTags {
     public static final String SUCCESS = "success";
     public static final String WARNING = "warning";
     public static final String RECIPE = "recipe";
+    public static final String EVENT_PLAN = "eventPlan";
 
     public static final String RECIPES = "recipes";
+    public static final String EVENT_PLANS = "eventPlans";
     public static final String USER = "user";
 
 

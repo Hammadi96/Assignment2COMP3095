@@ -2,10 +2,28 @@ package ca.gb.comp3095.foodrecipe.controller.recipe;
 
 import ca.gb.comp3095.foodrecipe.model.domain.Recipe;
 import ca.gb.comp3095.foodrecipe.model.domain.User;
+import lombok.extern.slf4j.Slf4j;
 
 import java.time.Duration;
+import java.util.function.BiFunction;
 
+@Slf4j
 public class RecipeConverter {
+    private static final BiFunction<Recipe, String, RecipeDto> recipeMapperWithLikes = (recipe, userName) -> {
+        RecipeDto recipeDto = RecipeConverter.toDto(recipe);
+        if (isLikedByUser(recipe, userName)) {
+            log.info("recipe {} is liked by user {}", recipe, userName);
+            recipeDto.setIsLikedByCurrentUser(true);
+        }
+        return recipeDto;
+    };
+
+    private static boolean isLikedByUser(final Recipe recipe, final String name) {
+        if (recipe.getLikedBy() == null || recipe.getLikedBy().isEmpty()) {
+            return false;
+        }
+        return recipe.getLikedBy().stream().map(User::getName).anyMatch(n -> n.equalsIgnoreCase(name));
+    }
 
     public static Recipe toDomain(final RecipeDto recipeDto) {
         return Recipe.builder()
@@ -31,5 +49,9 @@ public class RecipeConverter {
                 .ingredients(recipe.getIngredients())
                 .submittedBy(recipe.getUser().getName())
                 .userId(recipe.getUser().getId()).build();
+    }
+
+    public static RecipeDto toDtoWithLikedBy(final Recipe recipe, final String currentUserName) {
+        return recipeMapperWithLikes.apply(recipe, currentUserName);
     }
 }

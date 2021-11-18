@@ -46,7 +46,7 @@ public class UserRecipeViewController implements WebMvcConfigurer {
         try {
             Optional<User> userByName = userService.getUserByName(principal.getName());
             UserDto userFound = userByName.map(UserConverter::fromDomain).orElseThrow(RuntimeException::new);
-            List<RecipeDto> allRecipesForUser = recipeService.getAllRecipesForUser(userFound.getId()).stream().map(RecipeConverter::toDto).collect(Collectors.toList());
+            List<RecipeDto> allRecipesForUser = recipeService.getAllRecipesForUser(userFound.getId()).stream().map(recipe -> RecipeConverter.toDtoWithLikedBy(recipe, principal.getName())).collect(Collectors.toList());
             model.addAttribute(AttributeTags.USER, userFound);
             if (allRecipesForUser.isEmpty()) {
                 model.addAttribute(WARNING, "Oops, you haven't added any recipes yet!");
@@ -67,7 +67,7 @@ public class UserRecipeViewController implements WebMvcConfigurer {
         try {
             Optional<User> userByName = userService.getUserByName(principal.getName());
             User userFound = userByName.orElseThrow(RuntimeException::new);
-            List<RecipeDto> allLikedRecipesByUser = userFound.getLikedRecipes().stream().map(RecipeConverter::toDto).collect(Collectors.toList());
+            List<RecipeDto> allLikedRecipesByUser = userFound.getLikedRecipes().stream().map(recipe -> RecipeConverter.toDtoWithLikedBy(recipe, principal.getName())).collect(Collectors.toList());
             model.addAttribute(AttributeTags.USER, userFound);
             if (allLikedRecipesByUser.isEmpty()) {
                 model.addAttribute(WARNING, "Oops, you haven't liked any recipes yet!");
