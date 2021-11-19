@@ -30,9 +30,11 @@ public class EventPlan extends CommonEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
 
-    String title;
+    String type;
 
-    String description;
+    Long attendees;
+
+    String mealsDescription;
 
     Instant dueDate;
 

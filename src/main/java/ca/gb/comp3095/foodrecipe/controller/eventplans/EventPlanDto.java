@@ -16,9 +16,11 @@ public class EventPlanDto {
 
     Long id;
 
-    String title;
+    String type;
 
-    String description;
+    Long attendees;
+
+    String mealPlan;
 
     Instant dueBy;
 
