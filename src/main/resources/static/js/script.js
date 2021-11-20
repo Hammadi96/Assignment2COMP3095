@@ -12,3 +12,19 @@ function toggleFavorite(x, url) {
             x.checked = !x.checked;
         })
 }
+
+function deleteEventPlan(obj, url) {
+    fetch(url, {
+        method : 'DELETE'})
+        .then(response => {
+            if(!response.ok) {
+                console.log("Unable to delete event id " + url)
+                alert('Unable to delete event plan at the moment')
+            } else {
+                alert('event plan deleted successfully!')
+                location.reload()
+            }
+        }).catch((error) => {
+            console.log("internal error while deleting event " + error)
+    })
+}

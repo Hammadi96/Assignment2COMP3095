@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -41,8 +42,10 @@ public class Recipe extends CommonEntity {
 
     Long servings;
 
+    @Column(columnDefinition = "TEXT")
     String instructions;
 
+    @Column(columnDefinition = "TEXT")
     String ingredients;
 
     @OneToOne

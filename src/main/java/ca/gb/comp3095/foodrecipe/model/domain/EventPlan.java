@@ -9,6 +9,7 @@ import lombok.ToString;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -34,6 +35,7 @@ public class EventPlan extends CommonEntity {
 
     Long attendees;
 
+    @Column(columnDefinition = "TEXT")
     String mealsDescription;
 
     Instant dueDate;

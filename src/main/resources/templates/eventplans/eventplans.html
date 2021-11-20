@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<div th:replace="fragments/header :: header(page_title='All Eventplans')"></div>
+<body>
+<nav th:replace="fragments/header :: navbar"/>
+<div class="container">
+    <div class="col">
+        <div class="e-tabs mb-3 px-3">
+            <ul class="nav nav-tabs">
+                <li class="nav-item"><a class="nav-link active" href="#">Event Plans</a></li>
+            </ul>
+        </div>
+
+        <div class="row flex-lg-nowrap">
+            <div class="col mb-3">
+                <div class="e-panel card">
+                    <div class="card-body">
+                        <div class="card-title">
+                            <h6 class="mr-2"><span>Plans</span><small class="px-1">for your appetite</small></h6>
+                        </div>
+                        <div class="e-table">
+                            <div class="table-responsive table-lg mt-3">
+                                <table class="table table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th class="max-width">Type</th>
+                                        <th class="sortable">Date</th>
+                                        <th class="max-width">Meals</th>
+                                        <th class="max-width">Total Attendees</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <div th:if="${eventPlans}">
+                                        <tr th:each="eventPlan : ${eventPlans}">
+                                            <td class="text-nowrap align-middle" th:text="${eventPlan.getType()}"/>
+                                            <td class="text-nowrap align-middle"
+                                                th:text="${#temporals.format(eventPlan.getDueBy(), 'dd-MMM-yyyy hh:mm a, E')}"/>
+                                            <td class="text-nowrap align-middle" th:text="${eventPlan.getMealPlan()}"/>
+
+                                            <td class="text-center align-middle" th:text="${eventPlan.getAttendees()}"/>
+
+                                            <td class="text-center align-middle">
+                                                <div class="btn-group align-top">
+                                                    <button class="btn btn-sm btn-outline-secondary badge" type="button"
+                                                            th:onclick="@{'window.location.href=\'/eventplans/' + ${eventPlan.getId()} + '\';'}"> Edit
+                                                    </button>
+                                                    <button class="btn btn-sm btn-outline-secondary badge"
+                                                            th:onclick="'deleteEventPlan(this, \'/eventplans/' + ${eventPlan.getId()} +'\' )'"
+                                                            type="button"><i
+                                                            class="fa fa-trash"></i></button>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                    </div>
+
+
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-3 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="text-center px-xl-3">
+                            <button class="btn btn-success btn-block" type="button" id="new-eventplan" th:href="@{/eventplans/create}"
+                                    onclick="window.location.href='/eventplans/create';">New Plan
+                            </button>
+                        </div>
+                        <hr class="my-3">
+                        <div class="e-navlist e-navlist--active-bold">
+                            <ul class="nav">
+                                <li class="nav-item active"><a href="" class="nav-link"><span>All Plans: </span>&nbsp;<small th:text="${#lists.size(eventPlans)}"></small></a></li>
+
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>

@@ -9,6 +9,10 @@ spring:
       static-locations: file:src/main/resources/static/
       cache:
         period: 0
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
 logging:
   level:
     web: DEBUG
