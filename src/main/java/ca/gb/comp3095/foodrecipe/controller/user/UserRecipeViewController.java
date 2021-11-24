@@ -5,6 +5,7 @@ import ca.gb.comp3095.foodrecipe.controller.recipe.RecipeDto;
 import ca.gb.comp3095.foodrecipe.model.domain.Recipe;
 import ca.gb.comp3095.foodrecipe.model.domain.User;
 import ca.gb.comp3095.foodrecipe.model.service.RecipeService;
+import ca.gb.comp3095.foodrecipe.model.service.ShoppingCartService;
 import ca.gb.comp3095.foodrecipe.model.service.UserService;
 import ca.gb.comp3095.foodrecipe.view.AttributeTags;
 import lombok.extern.slf4j.Slf4j;
@@ -28,6 +29,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import static ca.gb.comp3095.foodrecipe.view.AttributeTags.MESSAGE;
+import static ca.gb.comp3095.foodrecipe.view.AttributeTags.TOTAL_ITEMS;
 import static ca.gb.comp3095.foodrecipe.view.AttributeTags.WARNING;
 
 @Controller
@@ -40,6 +42,9 @@ public class UserRecipeViewController implements WebMvcConfigurer {
     @Autowired
     RecipeService recipeService;
 
+    @Autowired
+    ShoppingCartService shoppingCartService;
+
     @GetMapping(path = "/all")
     @PreAuthorize("hasRole('USER')")
     public String getAllUserRecipes(Principal principal, Model model) {
@@ -48,6 +53,7 @@ public class UserRecipeViewController implements WebMvcConfigurer {
             UserDto userFound = userByName.map(UserConverter::fromDomain).orElseThrow(RuntimeException::new);
             List<RecipeDto> allRecipesForUser = recipeService.getAllRecipesForUser(userFound.getId()).stream().map(recipe -> RecipeConverter.toDtoWithLikedBy(recipe, principal.getName())).collect(Collectors.toList());
             model.addAttribute(AttributeTags.USER, userFound);
+            model.addAttribute(TOTAL_ITEMS, shoppingCartService.getTotal().longValue());
             if (allRecipesForUser.isEmpty()) {
                 model.addAttribute(WARNING, "Oops, you haven't added any recipes yet!");
             } else {
@@ -75,6 +81,7 @@ public class UserRecipeViewController implements WebMvcConfigurer {
                 model.addAttribute(MESSAGE, allLikedRecipesByUser.size() + " recipes found!");
                 model.addAttribute(AttributeTags.RECIPES, allLikedRecipesByUser);
             }
+            model.addAttribute(TOTAL_ITEMS, shoppingCartService.getTotal().longValue());
         } catch (Exception e) {
             log.warn("No user found for id {}", principal.getName(), e);
             model.addAttribute(AttributeTags.ERROR, "User not found for user: " + principal.getName());

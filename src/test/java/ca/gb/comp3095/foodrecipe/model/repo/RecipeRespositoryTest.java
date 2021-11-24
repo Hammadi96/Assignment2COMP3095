@@ -118,7 +118,6 @@ class RecipeRespositoryTest {
         User secondUserById = userRepository.findById(secondUser.getId()).get();
         assertThat(firstUserById.getLikedRecipes()).isNullOrEmpty();
         assertThat(secondUserById.getLikedRecipes()).isNullOrEmpty();
-        assertThat(recipeRepository.findAll()).isNullOrEmpty();
 
         recipe1 = recipeRepository.save(recipe1);
         recipe2 = recipeRepository.save(recipe2);

@@ -49,6 +49,13 @@
         <ul class="nav navbar-nav navbar-right">
             <a href="#" th:href="@{/user/details}"><i class="fa fa-fw fa-user"></i> Profile</a>
         </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <a href="#" th:href="@{/view/cart}"><i class="fas fa-shopping-cart"></i> <span class='badge badge-warning'
+                                                                                           id='lblCartCount'
+                                                                                           th:if="${totalItems > 0}"
+                                                                                           th:text="${totalItems}"></span>
+                Cart</a>
+        </ul>
 
         <ul class="nav navbar-nav navbar-right">
             <div class="input-group" sec:authorize="isAuthenticated()">

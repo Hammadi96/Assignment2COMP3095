@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -15,6 +17,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import java.time.Duration;
 import java.util.HashSet;
@@ -47,6 +50,16 @@ public class Recipe extends CommonEntity {
 
     @Column(columnDefinition = "TEXT")
     String ingredients;
+
+    @OneToMany(cascade = {
+            CascadeType.DETACH,
+            CascadeType.MERGE,
+            CascadeType.REFRESH,
+            CascadeType.PERSIST
+    }, fetch = FetchType.EAGER)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    Set<Ingredient> allIngredients = new HashSet<>();
 
     @OneToOne
     @ToString.Exclude

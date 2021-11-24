@@ -8,6 +8,7 @@ import ca.gb.comp3095.foodrecipe.model.domain.User;
 import ca.gb.comp3095.foodrecipe.model.repo.RecipeRespository;
 import ca.gb.comp3095.foodrecipe.model.repo.UserRepository;
 import ca.gb.comp3095.foodrecipe.model.service.SearchService;
+import ca.gb.comp3095.foodrecipe.model.service.ShoppingCartService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,6 +26,7 @@ import java.util.stream.Collectors;
 import static ca.gb.comp3095.foodrecipe.view.AttributeTags.ERROR;
 import static ca.gb.comp3095.foodrecipe.view.AttributeTags.RECIPES;
 import static ca.gb.comp3095.foodrecipe.view.AttributeTags.SUCCESS;
+import static ca.gb.comp3095.foodrecipe.view.AttributeTags.TOTAL_ITEMS;
 import static ca.gb.comp3095.foodrecipe.view.AttributeTags.WARNING;
 
 @Controller
@@ -34,8 +36,12 @@ public class SearchViewController {
     @Autowired
     SearchService searchService;
 
+    @Autowired
+    ShoppingCartService shoppingCartService;
+
     @GetMapping()
-    public String getSearch(SearchRecipeCommand searchRecipeCommand) {
+    public String getSearch(SearchRecipeCommand searchRecipeCommand, final Model model) {
+        model.addAttribute(TOTAL_ITEMS, shoppingCartService.getTotal().longValue());
         return "recipe/search-recipe";
     }
 
@@ -46,6 +52,9 @@ public class SearchViewController {
                     .map(recipe -> recipeMapperWithLikes.apply(recipe, principal))
                     .collect(Collectors.toList());
             model.addAttribute(RECIPES, recipes);
+            log.info("current items in cart {}", shoppingCartService.getItemsInCart());
+            log.info("total items in cart {}", shoppingCartService.getTotal());
+            model.addAttribute(TOTAL_ITEMS, shoppingCartService.getTotal().longValue());
         } catch (Exception e) {
             log.warn("Unable to get all recipes", e);
             model.addAttribute(ERROR, "Unable to get recipes at the moment!");
@@ -55,6 +64,7 @@ public class SearchViewController {
 
     @PostMapping()
     public String searchByCommand(SearchRecipeCommand searchRecipeCommand, BindingResult bindingResult, Model model, Principal principal) {
+        model.addAttribute(TOTAL_ITEMS, shoppingCartService.getTotal().longValue());
         if (bindingResult.hasErrors()) {
             log.warn("binding errors {}", bindingResult.getAllErrors().stream().map(String::valueOf).collect(Collectors.joining(",")));
             return "recipe/search-recipe";

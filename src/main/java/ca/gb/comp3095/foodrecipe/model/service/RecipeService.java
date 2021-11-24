@@ -13,4 +13,8 @@ public interface RecipeService {
     Recipe updateRecipe(Recipe recipe);
 
     List<Recipe> getAllRecipesForUser(Long userId);
+
+    default boolean deleteRecipeById(Long id) {
+        return false;
+    }
 }

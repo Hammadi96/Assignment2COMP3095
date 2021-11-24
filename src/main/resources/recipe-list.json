@@ -9,7 +9,7 @@
     "cookingTime": 10,
     "servings": 2,
     "cookingInstructions": "instructions",
-    "ingredients": "ingredients",
+    "allIngredients": ["ingredients"],
     "userId": 1,
     "submittedBy": null
   },
@@ -23,7 +23,7 @@
     "cookingTime": 10,
     "servings": 2,
     "cookingInstructions": "instructions",
-    "ingredients": "ingredients",
+    "allIngredients": ["ingredients"],
     "userId": 1,
     "submittedBy": null
   },
@@ -37,7 +37,7 @@
     "cookingTime": 10,
     "servings": 2,
     "cookingInstructions": "instructions",
-    "ingredients": "ingredients",
+    "allIngredients": ["onion", "garlic"],
     "userId": 1,
     "submittedBy": null
   }

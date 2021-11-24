@@ -3,6 +3,7 @@ package ca.gb.comp3095.foodrecipe.controller.eventplans;
 import ca.gb.comp3095.foodrecipe.model.domain.EventPlan;
 import ca.gb.comp3095.foodrecipe.model.domain.User;
 import ca.gb.comp3095.foodrecipe.model.service.EventPlanService;
+import ca.gb.comp3095.foodrecipe.model.service.ShoppingCartService;
 import ca.gb.comp3095.foodrecipe.model.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,7 @@ import static ca.gb.comp3095.foodrecipe.view.AttributeTags.EVENT_PLAN;
 import static ca.gb.comp3095.foodrecipe.view.AttributeTags.EVENT_PLANS;
 import static ca.gb.comp3095.foodrecipe.view.AttributeTags.MESSAGE;
 import static ca.gb.comp3095.foodrecipe.view.AttributeTags.SUCCESS;
+import static ca.gb.comp3095.foodrecipe.view.AttributeTags.TOTAL_ITEMS;
 import static ca.gb.comp3095.foodrecipe.view.AttributeTags.WARNING;
 
 @Controller
@@ -40,6 +42,9 @@ public class EventPlansViewController implements WebMvcConfigurer {
 
     @Autowired
     EventPlanService eventPlanService;
+
+    @Autowired
+    ShoppingCartService shoppingCartService;
 
     @GetMapping("/test")
     @PreAuthorize("hasRole('USER')")
@@ -63,6 +68,7 @@ public class EventPlansViewController implements WebMvcConfigurer {
             List<EventPlanDto> allEventPlans = eventPlanService.findAllForUser(userByName.orElseThrow(RuntimeException::new))
                     .stream().map(EventPlanConverter::toDto)
                     .collect(Collectors.toList());
+            model.addAttribute(TOTAL_ITEMS, shoppingCartService.getTotal().longValue());
             model.addAttribute(EVENT_PLANS, allEventPlans);
             model.addAttribute(MESSAGE, allEventPlans.size() + " event plans found!");
         } catch (Exception e) {
@@ -89,7 +95,8 @@ public class EventPlansViewController implements WebMvcConfigurer {
 
     @GetMapping("/create")
     @PreAuthorize("hasRole('USER')")
-    public String showEventPlanCreationForm(final EventPlanDto eventPlanDto) {
+    public String showEventPlanCreationForm(final EventPlanDto eventPlanDto, final Model model) {
+        model.addAttribute(TOTAL_ITEMS, shoppingCartService.getTotal().longValue());
         return "eventplans/new-eventplan";
     }
 
@@ -126,6 +133,7 @@ public class EventPlansViewController implements WebMvcConfigurer {
     @PostMapping("/edit")
     @PreAuthorize("hasRole('USER')")
     public String editEventPlan(final EventPlanDto eventPlanDto, final BindingResult bindingResult, final Model model) {
+        model.addAttribute(TOTAL_ITEMS, shoppingCartService.getTotal().longValue());
         if (bindingResult.hasErrors()) {
             log.warn("Unable to edit event plan {}, form has errors {}", eventPlanDto, bindingResult.getAllErrors());
             return "redirect:/";

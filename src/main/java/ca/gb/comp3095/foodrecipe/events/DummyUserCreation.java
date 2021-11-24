@@ -56,7 +56,7 @@ public class DummyUserCreation {
         try {
             loadRecipes(resourceFile.getFile());
         } catch (Exception e) {
-            log.warn("unable to load recipes");
+            log.warn("unable to load recipes", e);
         }
         log.info("User created successfully {}", dummyUser);
     }
