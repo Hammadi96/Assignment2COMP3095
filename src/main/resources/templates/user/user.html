@@ -8,8 +8,7 @@
     <div class="row login_box">
         <div class="col-md-12 col-xs-12" align="center">
             <!--            <div class="line"><h3 th:text="${#dates.monthNameShort(user.getCreationTime())}"/></div>-->
-            <div class="outter"><i class="fa fa-user" aria-hidden="true"></i>
-                <img src="http://lorempixel.com/output/people-q-c-100-100-1.jpg" class="image-circle"/></div>
+
             <h1 th:text="${'Hi ' + user.getUserName() + '!'}"/>
         </div>
         <div class="col-md-6 col-xs-6 follow line" align="center">
@@ -21,8 +20,19 @@
         <div class="col-md-12 col-xs-12 login_control form">
 
             <div class="control">
+                <div class="label">User Name</div>
+                <input type="text" class="form-control" th:value="${user.getUserName()}"/>
+            </div>
+
+            <div class="control">
                 <div class="label">Email Address</div>
                 <input type="text" class="form-control" th:value="${user.getEmail()}"/>
+            </div>
+
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary btn-lg btn-block mt-3"
+                        data-loading-text="Saving details">Save
+                </button>
             </div>
 
             <div class="control">
