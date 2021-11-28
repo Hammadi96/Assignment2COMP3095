@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.stereotype.Controller;
@@ -26,7 +27,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 @Controller
 @RequestMapping(value = "/user", produces = {MediaType.APPLICATION_JSON_VALUE})
@@ -66,7 +69,7 @@ public class UserViewController implements WebMvcConfigurer {
     @PreAuthorize("hasRole('USER')")
     public String showDetails(Principal principal, Model model) {
         try {
-            Optional<User> userByName = userService.getUserByName(principal.getName());
+            Optional<User> userByName = userService.getUserByName(principal.getName().toLowerCase(Locale.ROOT));
             UserDto userFound = userByName.map(UserConverter::fromDomain).orElseThrow(RuntimeException::new);
             List<Recipe> allRecipesForUser = recipeService.getAllRecipesForUser(userFound.getId());
             model.addAttribute(AttributeTags.USER, userFound);
@@ -115,6 +118,8 @@ public class UserViewController implements WebMvcConfigurer {
             return "redirect:/";
         }
 
+        log.info("user exists {} by name ", userDetailsManager.userExists(userById.get().getName()));
+
         try {
             User updatedUser = userService.changePassword(userId, changePasswordCommand.getPassword1());
             userDetailsManager.changePassword(userById.get().getPassword(), changePasswordCommand.getPassword1());
@@ -123,9 +128,67 @@ public class UserViewController implements WebMvcConfigurer {
         } catch (Exception e) {
             log.warn("unable to change password for user {} ", userById, e);
             model.addAttribute(AttributeTags.USER, UserConverter.fromDomain(userById.get()));
-            model.addAttribute(AttributeTags.ERROR, "Unable to change password for user {}" + userById);
+            model.addAttribute(AttributeTags.ERROR, "Unable to change password for user " + userById.get().getName());
         }
         return "user/user";
+    }
+
+    @PostMapping(path = "/update")
+    public String updateUserDetails(CreateUserCommand createUserCommand, BindingResult bindingResult, Model model, Principal principal) {
+        if (bindingResult.hasErrors()) {
+            log.warn("Unable to edit user details");
+            return "redirect:/";
+        }
+        AtomicBoolean userNameChanged = new AtomicBoolean(false);
+        AtomicBoolean emailChanged = new AtomicBoolean(false);
+        try {
+            Optional<User> userByName = userService.getUserByName(principal.getName().toLowerCase(Locale.ROOT));
+            userByName.ifPresentOrElse(user -> {
+                UserDetails userDetails = userDetailsManager.loadUserByUsername(user.getName());
+                model.addAttribute(AttributeTags.USER, UserConverter.fromDomain(user));
+                model.addAttribute("recipeCounts", recipeService.getAllRecipesForUser(user.getId()).size());
+                if (!user.getName().equalsIgnoreCase(createUserCommand.getUserName()) && StringUtils.isNotEmpty(createUserCommand.getUserName())) {
+                    if (isUserNameTaken(createUserCommand.getUserName())) {
+                        log.warn("user name {} already taken !", createUserCommand.getUserName());
+                        return;
+                    }
+                    user.setName(createUserCommand.getUserName().toLowerCase(Locale.ROOT));
+
+                    userNameChanged.set(true);
+                }
+                if (StringUtils.isNotEmpty(createUserCommand.getEmail()) && !StringUtils.equalsIgnoreCase(user.getEmail(), createUserCommand.getEmail())) {
+                    user.setEmail(createUserCommand.getEmail());
+                    emailChanged.set(true);
+                }
+
+                if (userNameChanged.get() || emailChanged.get()) {
+                    final User savedUser = userService.saveUser(user);
+                    log.info("user details updated successfully");
+                    if (userNameChanged.get()) {
+                        UserDetails updatedUserDetails = org.springframework.security.core.userdetails.User.withUserDetails(userDetails)
+                                .username(createUserCommand.getUserName())
+                                .build();
+                        userDetailsManager.createUser(updatedUserDetails); // create a new copy of the user name
+                        return;
+                    }
+                    model.addAttribute(AttributeTags.USER, UserConverter.fromDomain(savedUser));
+                    model.addAttribute(AttributeTags.SUCCESS, "User details changed successfully!");
+                }
+            }, RuntimeException::new);
+        } catch (RuntimeException e) {
+            log.warn("user not found for name {}", principal.getName(), e);
+            model.addAttribute(AttributeTags.WARNING, "Unable to update user details!");
+        }
+        if (userNameChanged.get()) {
+            try {
+                userDetailsManager.deleteUser(principal.getName().toLowerCase(Locale.ROOT));
+            } catch (Exception e) {
+                log.warn("Unable to delete user {}, will simply logout", principal.getName(), e);
+            }
+            return "redirect:/logout";
+        }
+        return "user/user";
+
     }
 
     @PostMapping(path = "/create")

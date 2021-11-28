@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Locale;
+
 @RestController
 @RequestMapping(value = "/v1/user", produces = {MediaType.APPLICATION_JSON_VALUE})
 @Slf4j
@@ -47,7 +49,7 @@ public class UserController {
     @PostMapping(path = "/create", consumes = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<UserDto> createNewUser(@RequestBody CreateUserCommand createUserCommand) {
         try {
-            User user = User.builder().name(createUserCommand.getUserName()).password(createUserCommand.getPassword()).build();
+            User user = User.builder().name(createUserCommand.getUserName().toLowerCase(Locale.ROOT)).password(createUserCommand.getPassword()).build();
             UserDto userDto = UserConverter.fromDomain(userService.createNewUser(user));
             return new ResponseEntity<>(userDto, HttpStatus.CREATED);
         } catch (Exception e) {
