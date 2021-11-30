@@ -9,7 +9,7 @@
     "cookingTime": 10,
     "servings": 2,
     "cookingInstructions": "stir chicken, cilantro, and chili powder together in a bowl then arrange the avocado havles on serving dish and sprinkle with lime juice, spoon chicken mixture into avocado halves. ",
-    "allIngredients": ["2 drained cans (6 ounce) of canned chicken - 1/2 TBS finely chopped cilantro - 1/3 TBS chilli powder - 2 avocados halved lengthwise and pitted - 4/5 TBS lime juice "],
+    "allIngredients": ["2 drained cans (6 ounce) of canned chicken", "1/2 TBS finely chopped cilantro", "1/3 TBS chilli powder", "2 avocados halved lengthwise and pitted", "4/5 TBS lime juice "],
     "userId": 1,
     "submittedBy": "Rudie"
   },
@@ -24,7 +24,7 @@
     "servings": 2,
     "allIngredients": ["1TBS bacon drippings", "2 corn tortillas", "2 slices Manchego cheese", "6 zucchini blossoms."],
     "userId": 1,
-    "submittedBy": null
+    "submittedBy": null,
     "cookingInstructions": "Melt bacon grease in a cast iron skillet over medium heat. Place tortillas in the skillet. Top each tortilla with 1 slice of Manchego cheese and 3 zucchini blossoms. Fold tortillas in half. Cook until tortillas are lightly browned and cheese starts to melt, 2 to 3 minutes. Turn and cook until the other side is crispy, lightly browned, and the cheese has melted, 1 more minute.",
     "ingredients": "1TBS bacon drippings - 2 corn tortillas - 2 slices Manchego cheese - 6 zucchini blossoms.",
     "userId": 3,
@@ -40,10 +40,9 @@
     "imageUrl": "http://image.url.com",
     "cookingTime": 10,
     "servings": 2,
-    "allIngredients": ["onion", "garlic"],
     "cookingInstructions": " To begin, in a large mug, melt the butter in the microwave, about 15 to 30 seconds. Add in the sugar as well as the light brown sugar and stir to combine. Next, add the egg and vanilla extract, and then whisk together. Next, add the flour, baking powder and salt to the mug; stir to combine. continue by stirring in the chocolate chips. Finally, put the mug in the microwave and heat for about 1 to 2 minutes until cooked. Another way to check is to insert a toothpick into the center and make sure it comes out clean. Once cooked throughout, serve immediately and enjoy.  ",
     "ingredients": "4TBS butter - 4TBS sugar - 2TBS light brown sugar - 2 egg - ½TBS pure vanilla extract - 2/3 cup all-purpose flour - ½TBS baking powder - Pinch of salt - 4TBS chocolate chips",
-    "allIngredients": ["4TBS butter", "4TBS sugar", "2TBS light brown sugar", "2 egg", "½TBS pure vanilla extract - 2/3 cup all-purpose flour - ½TBS baking powder - Pinch of salt - 4TBS chocolate chips"],
+    "allIngredients": ["4TBS butter", "4TBS sugar", "2TBS light brown sugar", "2 egg", "½TBS pure vanilla extract", "2/3 cup all-purpose flour", "½TBS baking powder - Pinch of salt", "4TBS chocolate chips"],
     "userId": 1,
     "submittedBy": "Mohamed Aljahani"
   },
@@ -58,6 +57,7 @@
     "servings": 2,
     "cookingInstructions": "In the bowl of an electric mixer fitted with the paddle attachment, cream the cream cheese and confectioners' sugar until light and fluffy, 4 to 5 minutes. Add the vanilla extract and mix to combine, 1 minute more. Add the peanuts and SNICKERS, and mix on low speed to incorporate. Pour the cooled milk chocolate and caramel sauce over the mixture and use a rubber spatula to fold it in. Don’t fully combine--you want it to look swirly. Transfer the dip to a serving bowl. Garnish with 2 tablespoons chopped SNICKERS and serve with chocolate wafers.",
     "ingredients": "2.4 ounces fat-free cream cheese, at room temperature - ½TBS confectioners' sugar - ¼TBS pure vanilla extract - ½TBS salted peanuts, roughly chopped - 4TBS chopped SNICKERS Fun Size bars - 1/2TBS for garnish - 4TBS milk chocolate, melted and cooled for 10 minutes - ½cup store-bought caramel sauce - 6 chocolate wafer cookies, for serving",
+    "allIngredients": ["2.4 ounces fat-free cream cheese, at room temperature","½TBS confectioners' sugar","¼TBS pure vanilla extract","½TBS salted peanuts, roughly chopped","4TBS chopped SNICKERS Fun Size bars","1/2TBS for garnish","4TBS milk chocolate, melted and cooled for 10 minutes","½cup store-bought caramel sauce","6 chocolate wafer cookies, for serving"],
     "userId": 2,
     "submittedBy": "Rudie"
   }
