@@ -44,7 +44,7 @@ public class DummyUserCreation {
     @EventListener(ApplicationReadyEvent.class)
     public void createDummyUser() {
         dummyUser = userService.createNewUser(User.builder()
-                .name("testUser")
+                .name("testuser")
                 .email("test@food-recipe.com")
                 .password("test")
                 .build());
@@ -56,7 +56,7 @@ public class DummyUserCreation {
         try {
             loadRecipes(resourceFile.getFile());
         } catch (Exception e) {
-            log.warn("unable to load recipes");
+            log.warn("unable to load recipes", e);
         }
         log.info("User created successfully {}", dummyUser);
     }

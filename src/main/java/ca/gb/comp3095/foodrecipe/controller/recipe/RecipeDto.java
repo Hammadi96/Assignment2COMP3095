@@ -8,6 +8,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.Set;
 
 @Data
 @Builder(toBuilder = true)
@@ -34,4 +35,6 @@ public class RecipeDto implements Serializable {
     Long userId;
     @NotNull
     String submittedBy;
+    Set<String> allIngredients; // TODO make it into a Ingredient Dto
+    Boolean isLikedByCurrentUser;
 }

@@ -28,7 +28,17 @@
                 <div class="row">
                     <div class="col">
                         <h5>Ingredients</h5>
-                        <div th:text="${recipe.getIngredients()}"/>
+                        <ul class="list-group">
+                            <li class="list-group-item " th:each="ing,iter: ${ingredients}">
+                                <span th:text="${ing.getName()}"/>
+                                <a href="#" title="Add to shopping list"
+                                   th:onclick="'addToCart(this, \'/view/cart/addItem/' + ${recipe.getId()} +'/' +  ${ing.getId()} + '\')'"
+                                   th:data-recipe-id="${recipe.getId()}"
+                                   th:data-ing-id="${ing.getId()}" id="add-ing-cart"><h5
+                                        class="fas fa-plus-circle text-primary float-right"></h5></a>
+                            </li>
+                        </ul>
+
                     </div>
                     <div class="col">
                         <h5>Directions</h5>
@@ -37,7 +47,7 @@
                 </div>
             </li>
         </ul>
-        <div class="card-body">
+        <div class="card-body" th:if="${#authentication.getName().equalsIgnoreCase(recipe.getSubmittedBy())}">
             <a th:href="@{'/view/recipe/edit/' + ${recipe.id}}" class="card-link">Edit</a>
         </div>
 

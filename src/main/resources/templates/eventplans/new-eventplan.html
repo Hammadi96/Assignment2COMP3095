@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<div th:replace="fragments/header :: header(page_title='Create new recipe')"></div>
+<body>
+<nav th:replace="fragments/header :: navbar"/>
+<div class="container">
+    <form action="#" th:action="@{/eventplans/create}" th:object="${eventPlanDto}" method="post">
+        <div class="rendered-form form-group" th:fragment="new-eventplan-form">
+
+            <div class="row">
+                <div class="col">
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label>Type</label>
+                                <input class="form-control event-type" type="text" th:field="*{type}"
+                                       required="required" aria-required="true"
+                                       placeholder="Event type">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label>Attendees</label>
+                                <input class="form-control servings" type="number" min="0" max="100"
+                                       required="required" aria-required="true"
+                                       th:field="*{attendees}"
+                                       placeholder="Attendees (not more than 100) e.g 3">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="eventDateTime">Date / Time <span
+                                        class="formbuilder-required">*</span></label>
+                                <input class="form-control date-time" type="datetime-local" id="eventDateTime"
+                                       th:field="*{dueBy}"
+                                       required="required" aria-required="true" name="eventDateTime"
+                                       value="2020-11-01T08:30">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col mb-3">
+                            <div class="form-group">
+                                <label>Meal Plan</label>
+                                <textarea class="form-control meal" rows="5"
+                                          th:field="*{mealPlan}"
+                                          required="required" aria-required="true"
+                                          placeholder="Add your meal plan e.g. Mexican tacos, Chicken Grill"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row modal-footer">
+                <div class="col d-flex justify-content-end">
+                    <button class="btn btn-primary" type="submit">Create</button>
+                </div>
+            </div>
+
+
+        </div>
+
+    </form>
+</div>
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>

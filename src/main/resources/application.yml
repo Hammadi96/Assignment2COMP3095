@@ -9,3 +9,12 @@ spring:
       static-locations: file:src/main/resources/static/
       cache:
         period: 0
+  jpa:
+    show-sql: true
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
+logging:
+  level:
+    web: DEBUG

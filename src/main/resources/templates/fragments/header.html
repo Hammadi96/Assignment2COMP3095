@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head th:fragment="header">
     <meta charset="UTF-8">
     <title th:text="${page_title}"></title>
+    <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
@@ -23,6 +24,12 @@
         <ul class="nav navbar-nav">
             <li><a th:href="@{'/recipe/search/all'}">All Recipes</a></li>
         </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li><a th:href="@{/user/recipe/all}"><span class="fas fa-pizza-slice"></span> My Recipes</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li><a th:href="@{/user/recipe/favorites}"><span class="fas fa-heart"></span> My Favorites</a></li>
+        </ul>
         <form class="navbar-form navbar-left" th:action="@{'/recipe/search'}" method="post">
             <div class="input-group">
                 <input type="text" class="form-control" placeholder="Search" name="description">
@@ -34,13 +41,28 @@
             </div>
         </form>
         <ul class="nav navbar-nav navbar-right">
+            <li><a th:href="@{/eventplans}"><span class="far fa-calendar-alt"></span> Event Plans</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
             <li><a th:href="@{/user/signup}"><span class="fas fa-user-plus"></span> Sign Up</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <a href="#" th:href="@{/user/details}"><i class="fa fa-fw fa-user"></i> Profile</a>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <a href="#" th:href="@{/view/cart}"><i class="fas fa-shopping-cart"></i> <span class='badge badge-warning'
+                                                                                           id='lblCartCount'
+                                                                                           th:if="${totalItems > 0}"
+                                                                                           th:text="${totalItems}"></span>
+                Cart</a>
         </ul>
 
         <ul class="nav navbar-nav navbar-right">
-            <a href="#" th:href="@{'/user/id/' + 1}"><i class="fa fa-fw fa-user"></i> Profile</a>
-        </ul>
+            <div class="input-group" sec:authorize="isAuthenticated()">
+                <li><a th:href="@{/logout}"><i class="fas fa-sign-out-alt" aria-hidden="true"></i> Logout</a></li>
 
+            </div>
+        </ul>
     </div>
 </nav>
 </body>

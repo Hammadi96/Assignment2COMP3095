@@ -7,10 +7,17 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import java.util.HashSet;
+import java.util.Set;
 
 @Builder
 @ToString(callSuper = true)
@@ -29,5 +36,18 @@ public class User extends CommonEntity {
     String email;
 
     String password;
+
+    @ManyToMany(cascade = {CascadeType.DETACH,
+            CascadeType.MERGE,
+            CascadeType.REFRESH,
+            CascadeType.PERSIST}, fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "user_favorite_recipes",
+            joinColumns = {@JoinColumn(name = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "recipe_id")}
+    )
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    Set<Recipe> likedRecipes = new HashSet<>();
 
 }

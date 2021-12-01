@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <div th:replace="fragments/header :: header(page_title='Sign Up to RecipeLand')"></div>
 <body>
 
@@ -18,6 +18,14 @@
                 </div>
             </div>
         </form>
+        <ul class="nav navbar-nav navbar-right">
+            <div sec:authorize="isAuthenticated()">
+                <a href="#" th:href="@{/logout}"><i class="fas fa-sign-in-alt"></i> Logout</a>
+            </div>
+            <div sec:authorize="isAnonymous()">
+                <a href="#" th:href="@{/login}"><i class="fas fa-sign-in-alt"></i> Login</a>
+            </div>
+        </ul>
     </div>
 </nav>
 
@@ -38,8 +46,12 @@
                 <form action="" th:action="@{/user/create}" th:object="${createUserCommand}" method="post"
                       name="user-signup-form">
                     <div class="form-group">
-                        <input type="text" name="userName" class="form-control my-input" id="userName"
-                               placeholder="Name">
+                        <div class="input-group">
+
+                            <input type="text" name="userName" class="form-control " id="userName"
+                                   placeholder="Name">
+
+                        </div>
                     </div>
                     <div class="form-group">
                         <input type="email" name="email" class="form-control my-input" id="email" placeholder="Email">
@@ -62,5 +74,7 @@
         </div>
     </div>
 </div>
+
+<div th:replace="fragments/footer :: footer"></div>
 </body>
 </html>

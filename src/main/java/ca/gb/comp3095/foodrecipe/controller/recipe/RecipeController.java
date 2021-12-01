@@ -57,5 +57,12 @@ public class RecipeController {
         }
     }
 
+    @PostMapping(path = "/create/test", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_FORM_URLENCODED_VALUE })
+    public ResponseEntity<?> createRecipeForUser(@RequestBody CreateRecipeCommand createRecipeCommand) {
+        log.info("test recipe creation with api ");
+        log.info("recipe command {}", createRecipeCommand);
+        return ResponseEntity.ok("yooohooo");
+    }
+
 
 }
