@@ -203,7 +203,7 @@ public class UserViewController implements WebMvcConfigurer {
             return "user/signup";
         }
         try {
-            User user = User.builder().name(createUserCommand.getUserName()).email(createUserCommand.getEmail()).password(createUserCommand.getPassword()).build();
+            User user = User.builder().name(createUserCommand.getUserName().toLowerCase(Locale.ROOT)).email(createUserCommand.getEmail()).password(createUserCommand.getPassword()).build();
             UserDto userDto = UserConverter.fromDomain(userService.createNewUser(user));
             log.info("successfully created user {}", userDto);
             userDetailsManager.createUser(
